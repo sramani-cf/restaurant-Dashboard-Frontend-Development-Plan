@@ -1,0 +1,107 @@
+version: '3.8'
+
+services:
+  # Next.js Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=redis://redis:6379
+      - TOAST_API_KEY=${TOAST_API_KEY}
+      - TOAST_API_SECRET=${TOAST_API_SECRET}
+      - SQUARE_ACCESS_TOKEN=${SQUARE_ACCESS_TOKEN}
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./public/uploads:/app/public/uploads
+    restart: unless-stopped
+    networks:
+      - restaurant-network
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=restaurant_user
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=restaurant_dashboard
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./prisma/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U restaurant_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - restaurant-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - restaurant-network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - nginx-cache:/var/cache/nginx
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - restaurant-network
+
+  # Backup Service
+  backup:
+    build:
+      context: .
+      dockerfile: Dockerfile.backup
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - BACKUP_S3_BUCKET=${BACKUP_S3_BUCKET}
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./public/uploads:/uploads:ro
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - restaurant-network
+
+volumes:
+  postgres-data:
+  redis-data:
+  nginx-cache:
+
+networks:
+  restaurant-network:
+    driver: bridge

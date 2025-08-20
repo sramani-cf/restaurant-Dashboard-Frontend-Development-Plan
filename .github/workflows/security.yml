@@ -1,0 +1,412 @@
+name: Security Scanning
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run security scans daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  dependency-audit:
+    name: Dependency Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        run: npm audit --audit-level high
+        continue-on-error: true
+
+      - name: Run audit-ci
+        run: npx audit-ci --config audit-ci.json
+        continue-on-error: true
+
+      - name: Generate audit report
+        run: |
+          npm audit --json > audit-report.json
+          npm audit --audit-level moderate --parseable > audit-parseable.txt
+        continue-on-error: true
+
+      - name: Upload audit results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dependency-audit-report
+          path: |
+            audit-report.json
+            audit-parseable.txt
+          retention-days: 30
+
+  vulnerability-scanning:
+    name: Vulnerability Scanning with Retire.js
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run retire.js vulnerability scanner
+        run: |
+          npx retire --path . --outputformat json --outputpath retire-report.json
+        continue-on-error: true
+
+      - name: Run retire.js for Node.js modules
+        run: |
+          npx retire --js --node --outputformat json --outputpath retire-node-report.json
+        continue-on-error: true
+
+      - name: Upload vulnerability scan results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vulnerability-scan-report
+          path: |
+            retire-report.json
+            retire-node-report.json
+          retention-days: 30
+
+  sast-scanning:
+    name: Static Application Security Testing
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint Security Plugin
+        run: npx eslint . --ext .js,.jsx,.ts,.tsx --format json --output-file eslint-security-report.json
+        continue-on-error: true
+
+      - name: Run Semgrep SAST
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/owasp-top-ten
+            p/javascript
+            p/typescript
+            p/react
+            p/nextjs
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+        continue-on-error: true
+
+      - name: Upload SAST results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sast-scan-report
+          path: |
+            eslint-security-report.json
+            semgrep-report.json
+          retention-days: 30
+
+  secret-scanning:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run TruffleHog for secret detection
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: main
+          head: HEAD
+          extra_args: --debug --only-verified
+        continue-on-error: true
+
+      - name: Run GitLeaks for additional secret scanning
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+  container-scanning:
+    name: Container Security Scanning
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'schedule'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          echo "FROM node:18-alpine" > Dockerfile.security
+          echo "WORKDIR /app" >> Dockerfile.security
+          echo "COPY package*.json ./" >> Dockerfile.security
+          echo "RUN npm ci --only=production" >> Dockerfile.security
+          echo "COPY . ." >> Dockerfile.security
+          echo "EXPOSE 3000" >> Dockerfile.security
+          echo "CMD [\"npm\", \"start\"]" >> Dockerfile.security
+          docker build -f Dockerfile.security -t restaurant-dashboard:security .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'restaurant-dashboard:security'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+        continue-on-error: true
+
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  license-compliance:
+    name: License Compliance Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run license checker
+        run: |
+          npx license-checker --json > license-report.json
+          npx license-checker --csv > license-report.csv
+        continue-on-error: true
+
+      - name: Check for problematic licenses
+        run: |
+          npx license-checker --excludePackages 'test@1.0.0' --failOn 'GPL;LGPL;AGPL;WTFPL'
+        continue-on-error: true
+
+      - name: Upload license reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: license-compliance-report
+          path: |
+            license-report.json
+            license-report.csv
+          retention-days: 30
+
+  security-headers-test:
+    name: Security Headers Testing
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Start application
+        run: |
+          npm start &
+          APP_PID=$!
+          echo "APP_PID=$APP_PID" >> $GITHUB_ENV
+          sleep 30  # Wait for app to start
+        env:
+          NODE_ENV: production
+
+      - name: Test security headers
+        run: |
+          node scripts/check-security-headers.js > security-headers-report.json
+        continue-on-error: true
+
+      - name: Stop application
+        run: |
+          if [ ! -z "$APP_PID" ]; then
+            kill $APP_PID
+          fi
+
+      - name: Upload security headers report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-headers-report
+          path: security-headers-report.json
+          retention-days: 30
+
+  codeql-analysis:
+    name: CodeQL Security Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['javascript']
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended,security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+        with:
+          category: '/language:${{ matrix.language }}'
+
+  security-report:
+    name: Security Report Generation
+    runs-on: ubuntu-latest
+    needs: [dependency-audit, vulnerability-scanning, sast-scanning, secret-scanning, license-compliance]
+    if: always()
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./security-reports
+
+      - name: Generate consolidated security report
+        run: |
+          mkdir -p ./consolidated-report
+          echo "# Security Scan Report - $(date)" > ./consolidated-report/SECURITY_REPORT.md
+          echo "" >> ./consolidated-report/SECURITY_REPORT.md
+          echo "## Scan Summary" >> ./consolidated-report/SECURITY_REPORT.md
+          echo "" >> ./consolidated-report/SECURITY_REPORT.md
+          
+          # List all generated reports
+          echo "### Generated Reports:" >> ./consolidated-report/SECURITY_REPORT.md
+          find ./security-reports -name "*.json" -o -name "*.csv" -o -name "*.txt" | while read file; do
+            echo "- $(basename "$file")" >> ./consolidated-report/SECURITY_REPORT.md
+          done
+          
+          echo "" >> ./consolidated-report/SECURITY_REPORT.md
+          echo "## Recommendations" >> ./consolidated-report/SECURITY_REPORT.md
+          echo "" >> ./consolidated-report/SECURITY_REPORT.md
+          echo "1. Review all high and critical severity vulnerabilities" >> ./consolidated-report/SECURITY_REPORT.md
+          echo "2. Update dependencies with known security issues" >> ./consolidated-report/SECURITY_REPORT.md
+          echo "3. Address any secret leaks or exposed credentials" >> ./consolidated-report/SECURITY_REPORT.md
+          echo "4. Verify security headers are properly configured" >> ./consolidated-report/SECURITY_REPORT.md
+          echo "5. Ensure license compliance for all dependencies" >> ./consolidated-report/SECURITY_REPORT.md
+
+      - name: Upload consolidated report
+        uses: actions/upload-artifact@v4
+        with:
+          name: consolidated-security-report
+          path: |
+            ./consolidated-report/
+            ./security-reports/
+          retention-days: 90
+
+      - name: Create security issue on failures
+        if: ${{ contains(needs.*.result, 'failure') && github.event_name != 'pull_request' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `Security Scan Failures - ${new Date().toISOString().split('T')[0]}`;
+            const body = `
+            ## Security Scan Results
+            
+            One or more security scans have failed. Please review the artifacts and take appropriate action.
+            
+            **Failed Jobs:**
+            ${Object.entries(context.payload.workflow_run?.conclusion || {}).filter(([k,v]) => v === 'failure').map(([k,v]) => `- ${k}`).join('\n')}
+            
+            **Workflow Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            **Next Steps:**
+            1. Download and review the security scan reports
+            2. Address any high or critical vulnerabilities
+            3. Update dependencies as needed
+            4. Re-run the security scans to verify fixes
+            
+            This issue was automatically created by the security scanning workflow.
+            `;
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['security', 'automated', 'high-priority']
+            });
+
+  security-notification:
+    name: Security Notification
+    runs-on: ubuntu-latest
+    needs: [security-report]
+    if: always() && (github.event_name == 'schedule' || github.event_name == 'push')
+    
+    steps:
+      - name: Send security scan notification
+        uses: actions/github-script@v7
+        with:
+          script: |
+            console.log('Security scan completed');
+            console.log('Scan results are available in the workflow artifacts');
+            // In production, you might want to send notifications to:
+            // - Slack/Teams channels
+            // - Email recipients
+            // - Security dashboards
+            // - SIEM systems
