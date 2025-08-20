@@ -4,9 +4,10 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createCSRFMiddleware } from './lib/security/csrf';
+// Temporarily disabled security middleware due to missing dependencies
+import { createCSRFMiddleware } from './lib/security/csrf-edge';
 import { createRateLimitMiddleware } from './lib/security/rate-limit';
-import { createSessionMiddleware } from './lib/security/session';
+import { createSessionMiddleware } from './lib/security/session-edge';
 import { createSecurityHeadersMiddleware } from './lib/security/headers';
 import { validateInput } from './lib/security/sanitization';
 import { SECURITY_CONFIG, SECURITY_EVENTS } from './security.config';

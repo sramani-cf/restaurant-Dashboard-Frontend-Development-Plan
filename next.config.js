@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   
   // Image optimization
   images: {
@@ -141,7 +140,7 @@ const nextConfig = {
 
   // Experimental features
   experimental: {
-    optimizeCss: true,
+    // optimizeCss: true, // Disabled - requires critters package
     scrollRestoration: true,
   },
 
