@@ -11,7 +11,6 @@ import {
   Download
 } from 'lucide-react';
 import { MetricCard } from '@/components/analytics/metric-card';
-import { AppShell } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
@@ -145,12 +144,13 @@ const quickActions = [
 
 export default function AnalyticsPage() {
   return (
-    <AppShell 
-      title="Analytics Overview"
-      description="Comprehensive business intelligence for your restaurant operations"
-      breadcrumbs={[{ label: 'Analytics' }]}
-      actions={
-        <>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Analytics Overview</h1>
+          <p className="text-lg text-gray-600">Comprehensive business intelligence for your restaurant operations</p>
+        </div>
+        <div className="flex items-center space-x-4">
           <Button variant="secondary">
             <Download className="h-4 w-4 mr-2" />
             Export Reports
@@ -159,9 +159,8 @@ export default function AnalyticsPage() {
             <Calendar className="h-4 w-4 mr-2" />
             Schedule Report
           </Button>
-        </>
-      }
-    >
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto space-y-8">
 
         {/* Key Metrics Grid */}
@@ -327,6 +326,6 @@ export default function AnalyticsPage() {
           </div>
         </div>
       </div>
-    </AppShell>
+    </div>
   );
 }

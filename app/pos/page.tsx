@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AppShell } from '@/components/layout';
 import { POSTerminal } from './pos-terminal';
 import { POSLogin } from './pos-login';
 import { POSSession } from '@/lib/pos/types';
@@ -46,25 +45,37 @@ export default function POSPage() {
 
   if (isLoading) {
     return (
-      <AppShell title="POS Terminal" description="Point of Sale system">
+      <div className="min-h-screen bg-gray-50 p-6">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-900">POS Terminal</h1>
+          <p className="text-sm text-gray-600">Point of Sale system</p>
+        </div>
         <div className="flex items-center justify-center min-h-96">
           <div className="text-xl">Loading POS Terminal...</div>
         </div>
-      </AppShell>
+      </div>
     );
   }
 
   if (!session) {
     return (
-      <AppShell title="POS Terminal" description="Point of Sale system">
+      <div className="min-h-screen bg-gray-50 p-6">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-900">POS Terminal</h1>
+          <p className="text-sm text-gray-600">Point of Sale system</p>
+        </div>
         <POSLogin onLogin={handleLogin} />
-      </AppShell>
+      </div>
     );
   }
 
   return (
-    <AppShell title="POS Terminal" description="Point of Sale system" breadcrumbs={[{ label: 'POS' }]}>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">POS Terminal</h1>
+        <p className="text-sm text-gray-600">Point of Sale system</p>
+      </div>
       <POSTerminal session={session} onLogout={handleLogout} />
-    </AppShell>
+    </div>
   );
 }

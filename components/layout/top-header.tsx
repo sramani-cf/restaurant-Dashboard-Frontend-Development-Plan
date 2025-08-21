@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button';
 
 interface TopHeaderProps {
   onMenuClick: () => void;
+  hideMenuButton?: boolean;
 }
 
-export function TopHeader({ onMenuClick }: TopHeaderProps) {
+export function TopHeader({ onMenuClick, hideMenuButton }: TopHeaderProps) {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
 
@@ -17,15 +18,17 @@ export function TopHeader({ onMenuClick }: TopHeaderProps) {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Mobile menu button */}
-          <div className="lg:hidden">
-            <button
-              onClick={onMenuClick}
-              className="p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
-              aria-label="Open sidebar"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-          </div>
+          {!hideMenuButton && (
+            <div className="lg:hidden">
+              <button
+                onClick={onMenuClick}
+                className="p-2 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+                aria-label="Open sidebar"
+              >
+                <Menu className="h-5 w-5" />
+              </button>
+            </div>
+          )}
 
           {/* Desktop title/search area */}
           <div className="hidden lg:flex lg:items-center lg:space-x-4">

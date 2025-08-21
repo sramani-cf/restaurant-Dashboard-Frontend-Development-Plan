@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { getOrder } from '@/lib/orders/data';
 import { OrderDetailContent } from './order-detail-content';
 import { OrderDetailSkeleton } from './order-detail-skeleton';
-import { AppShell } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 
 export default async function OrderDetailPage({
@@ -19,25 +18,27 @@ export default async function OrderDetailPage({
   }
 
   return (
-    <AppShell
-      title={`Order ${order.orderNumber}`}
-      description={`${order.type.replace('_', ' ')} • ${order.customerName || 'Guest'}`}
-      breadcrumbs={[
-        { label: 'Orders', href: '/orders' },
-        { label: `Order ${order.orderNumber}` }
-      ]}
-      actions={
-        <>
-          <Button variant="secondary">Print</Button>
-          <Link href={`/orders/${params.id}/edit`}>
-            <Button variant="secondary">Edit</Button>
-          </Link>
-        </>
-      }
-    >
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="mb-6">
+        <div className="text-sm text-gray-600 mb-2">
+          <Link href="/orders" className="hover:text-gray-900">Orders</Link> / Order {order.orderNumber}
+        </div>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Order {order.orderNumber}</h1>
+            <p className="text-sm text-gray-600">{order.type.replace('_', ' ')} • {order.customerName || 'Guest'}</p>
+          </div>
+          <div className="flex items-center space-x-3">
+            <Button variant="secondary">Print</Button>
+            <Link href={`/orders/${params.id}/edit`}>
+              <Button variant="secondary">Edit</Button>
+            </Link>
+          </div>
+        </div>
+      </div>
       <Suspense fallback={<OrderDetailSkeleton />}>
         <OrderDetailContent order={order} />
       </Suspense>
-    </AppShell>
+    </div>
   );
 }

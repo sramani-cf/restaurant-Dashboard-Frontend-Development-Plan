@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { AppShell } from '@/components/layout';
 import { 
   Reservation, 
   Guest, 
@@ -215,11 +214,11 @@ export default function ReservationsPage() {
   }
 
   return (
-    <AppShell
-      title="Reservations"
-      description="Manage table reservations, floor plans, and dining areas"
-      breadcrumbs={[{ label: 'Reservations' }]}
-    >
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">Reservations</h1>
+        <p className="text-sm text-gray-600">Manage table reservations, floor plans, and dining areas</p>
+      </div>
       <div className="space-y-6">
         <ReservationHeader 
           onReservationCreated={handleReservationUpdate}
@@ -367,6 +366,6 @@ export default function ReservationsPage() {
         </div>
       )}
       </div>
-    </AppShell>
+    </div>
   );
 }

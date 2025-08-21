@@ -1,5 +1,4 @@
 import { Suspense } from 'react';
-import { AppShell } from '@/components/layout';
 import { SimpleTabs } from '../../components/ui/tabs';
 import { RestaurantProfileTab } from '../../components/settings/restaurant-profile-tab';
 import { UsersRolesTab } from '../../components/settings/users-roles-tab';
@@ -103,17 +102,17 @@ export default async function SettingsPage({
   ];
 
   return (
-    <AppShell
-      title="Settings"
-      description="Configure your restaurant management system"
-      breadcrumbs={[{ label: 'Settings' }]}
-    >
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
+        <p className="text-sm text-gray-600">Configure your restaurant management system</p>
+      </div>
       <div className="h-full">
         <SimpleTabs
           tabs={tabs}
           className="h-full"
         />
       </div>
-    </AppShell>
+    </div>
   );
 }

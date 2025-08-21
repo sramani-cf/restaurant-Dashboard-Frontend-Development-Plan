@@ -1,7 +1,5 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
-
-import { AppShell } from '@/components/layout';
 import { InventoryDashboard } from '@/components/inventory/inventory-dashboard';
 import { InventoryMetricsCards } from '@/components/inventory/inventory-metrics-cards';
 import { InventoryFilters } from '@/components/inventory/inventory-filters';
@@ -64,16 +62,16 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
   const currentView = (searchParams.view || 'table') as 'grid' | 'table' | 'cards';
 
   return (
-    <AppShell
-      title="Inventory Overview"
-      description="Track stock levels, manage items, and monitor warehouse operations"
-      breadcrumbs={[{ label: 'Inventory' }]}
-      actions={
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Inventory Overview</h1>
+          <p className="text-sm text-gray-600">Track stock levels, manage items, and monitor warehouse operations</p>
+        </div>
         <Suspense fallback={<div className="h-10 w-32 bg-gray-200 rounded animate-pulse" />}>
           <QuickActions />
         </Suspense>
-      }
-    >
+      </div>
       <div className="space-y-6 pb-20 lg:pb-6">
 
       {/* Metrics Cards */}
@@ -273,6 +271,6 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
         }}
       />
       </div>
-    </AppShell>
+    </div>
   );
 }

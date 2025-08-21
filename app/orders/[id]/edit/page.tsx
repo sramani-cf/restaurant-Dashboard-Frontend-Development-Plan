@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 import { getOrder } from '@/lib/orders/data';
 import { OrderEditForm } from './order-edit-form';
 import { OrderDetailSkeleton } from '../order-detail-skeleton';
-import { AppShell } from '@/components/layout';
 
 export default async function EditOrderPage({
   params
@@ -17,18 +16,19 @@ export default async function EditOrderPage({
   }
 
   return (
-    <AppShell
-      title={`Edit Order ${order.orderNumber}`}
-      description="Modify order details, items, and customer information"
-      breadcrumbs={[
-        { label: 'Orders', href: '/orders' },
-        { label: `Order ${order.orderNumber}`, href: `/orders/${params.id}` },
-        { label: 'Edit' }
-      ]}
-    >
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="mb-6">
+        <div className="text-sm text-gray-600 mb-2">
+          <a href="/orders" className="hover:text-gray-900">Orders</a> / <a href={`/orders/${params.id}`} className="hover:text-gray-900">Order {order.orderNumber}</a> / Edit
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Edit Order {order.orderNumber}</h1>
+          <p className="text-sm text-gray-600">Modify order details, items, and customer information</p>
+        </div>
+      </div>
       <Suspense fallback={<OrderDetailSkeleton />}>
         <OrderEditForm order={order} />
       </Suspense>
-    </AppShell>
+    </div>
   );
 }

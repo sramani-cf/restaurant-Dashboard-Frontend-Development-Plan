@@ -1,25 +1,24 @@
 import { Suspense } from 'react';
-import { AppShell } from '@/components/layout';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 export default async function StaffPage() {
   return (
-    <AppShell
-      title="Staff Management"
-      description="Manage restaurant staff, schedules, and permissions"
-      breadcrumbs={[{ label: 'Staff' }]}
-      actions={
-        <>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Staff Management</h1>
+          <p className="text-sm text-gray-600">Manage restaurant staff, schedules, and permissions</p>
+        </div>
+        <div className="flex items-center space-x-3">
           <Link href="/staff/new">
             <Button variant="primary">Add Staff</Button>
           </Link>
           <Link href="/staff/schedule">
             <Button variant="secondary">View Schedule</Button>
           </Link>
-        </>
-      }
-    >
+        </div>
+      </div>
       <div className="grid gap-6">
         <div className="bg-white rounded-lg border p-6">
           <h2 className="text-lg font-semibold mb-4">Staff Overview</h2>
@@ -35,6 +34,6 @@ export default async function StaffPage() {
           </ul>
         </div>
       </div>
-    </AppShell>
+    </div>
   );
 }

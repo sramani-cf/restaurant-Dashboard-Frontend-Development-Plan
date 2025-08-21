@@ -13,7 +13,6 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { AppShell } from '@/components/layout';
 import {
   KdsTicket,
   KdsMetrics,
