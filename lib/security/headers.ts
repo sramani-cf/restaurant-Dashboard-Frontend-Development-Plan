@@ -4,7 +4,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import { SECURITY_CONFIG } from '../../security.config';
+import { SECURITY_CONFIG } from '../../config/security.config';
 
 // Security Headers Interface
 export interface SecurityHeaders {

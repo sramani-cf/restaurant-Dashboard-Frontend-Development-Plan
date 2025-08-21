@@ -64,7 +64,7 @@ export function isClosedPeriod(dateRange: DateRange): boolean {
 }
 
 // Get appropriate TTL based on whether the period is closed
-export function getAppropriateeTTL(reportType: ReportType, dateRange: DateRange): number {
+export function getAppropriateTTL(reportType: ReportType, dateRange: DateRange): number {
   const baseTTL = CACHE_CONFIGS[reportType].ttl;
   
   if (isClosedPeriod(dateRange)) {
@@ -97,7 +97,7 @@ export function createAnalyticsCache<T extends any[], R>(
     (...args: T) => {
       const dateRange = getDateRange(args);
       const config = CACHE_CONFIGS[reportType];
-      const ttl = getAppropriateeTTL(reportType, dateRange);
+      const ttl = getAppropriateTTL(reportType, dateRange);
       
       return {
         revalidate: ttl,
@@ -113,7 +113,7 @@ export class AnalyticsCache {
   // Store a report in cache with metadata
   static async storeReport(report: Report): Promise<void> {
     const cacheKey = generateCacheKey(report.type, report.dateRange);
-    const ttl = getAppropriateeTTL(report.type, report.dateRange);
+    const ttl = getAppropriateTTL(report.type, report.dateRange);
     const expiresAt = new Date(Date.now() + ttl * 1000);
     
     const cachedReport: CachedReport = {
@@ -121,7 +121,7 @@ export class AnalyticsCache {
       data: report,
       generatedAt: report.generatedAt,
       expiresAt,
-      hash: this.generateReportHash(report)
+      hash: AnalyticsCache.generateReportHash(report)
     };
     
     // In a real implementation, you'd store this in Redis or similar

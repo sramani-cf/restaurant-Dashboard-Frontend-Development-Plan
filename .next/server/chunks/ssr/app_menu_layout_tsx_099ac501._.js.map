@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///D:/Projects/Other/restaurant%20Dashboard%20Frontend%20Development%20Plan/restaurant-dashboard/app/menu/layout.tsx"],"sourcesContent":["import { Metadata } from 'next';\n\nexport const metadata: Metadata = {\n  title: 'Menu Management | Restaurant Dashboard',\n  description: 'Manage your restaurant menus, items, and modifiers',\n};\n\ninterface MenuLayoutProps {\n  children: React.ReactNode;\n}\n\nexport default function MenuLayout({ children }: MenuLayoutProps) {\n  return (\n    <div className=\"min-h-screen bg-gray-50\">\n      {children}\n    </div>\n  );\n}"],"names":[],"mappings":";;;;;;;;AAEO,MAAM,WAAqB;IAChC,OAAO;IACP,aAAa;AACf;AAMe,SAAS,WAAW,EAAE,QAAQ,EAAmB;IAC9D,qBACE,8OAAC;QAAI,WAAU;kBACZ;;;;;;AAGP","debugId":null}}]
+}

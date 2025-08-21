@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown, Package, AlertTriangle, Trash2, DollarSign } from 'lucide-react';
 import { StatCard } from '@/components/ui/stat-card';
 import { formatCurrency } from '@/lib/inventory/calculations';
@@ -100,12 +100,12 @@ export function InventoryMetricsCards({ initialMetrics, className }: InventoryMe
       <StatCard
         title="Total Value"
         value={formatCurrency(metrics.totalValue)}
-        icon={DollarSign}
-        description={`${metrics.totalItems} items`}
+        icon={<DollarSign className="h-4 w-4" />}
+        subtitle={`${metrics.totalItems} items`}
         trend={{
-          value: '+2.3%',
-          isPositive: true,
-          label: 'vs last week'
+          value: 2.3,
+          direction: 'up',
+          period: 'last week'
         }}
         className="bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200"
       />
@@ -113,15 +113,9 @@ export function InventoryMetricsCards({ initialMetrics, className }: InventoryMe
       {/* Stock Status */}
       <StatCard
         title="Stock Status"
-        value={`${metrics.totalItems - metrics.lowStockItems}`}
-        subValue={`of ${metrics.totalItems}`}
-        icon={Package}
-        description={stockStatusText}
-        trend={{
-          value: stockStatusColor.includes('red') ? 'Critical' : stockStatusColor.includes('orange') ? 'Warning' : 'Good',
-          isPositive: !stockStatusColor.includes('red') && !stockStatusColor.includes('orange'),
-          label: 'stock levels'
-        }}
+        value={`${metrics.totalItems - metrics.lowStockItems} of ${metrics.totalItems}`}
+        icon={<Package className="h-4 w-4" />}
+        subtitle={stockStatusText}
         className="bg-gradient-to-r from-green-50 to-green-100 border-green-200"
       />
 
@@ -129,13 +123,8 @@ export function InventoryMetricsCards({ initialMetrics, className }: InventoryMe
       <StatCard
         title="Expiring Soon"
         value={metrics.expiringItems.toString()}
-        icon={AlertTriangle}
-        description={`Items expiring in 3 days`}
-        trend={{
-          value: metrics.expiringItems > 10 ? 'High' : metrics.expiringItems > 5 ? 'Medium' : 'Low',
-          isPositive: metrics.expiringItems <= 5,
-          label: 'urgency level'
-        }}
+        icon={<AlertTriangle className="h-4 w-4" />}
+        subtitle={`Items expiring in 3 days`}
         className="bg-gradient-to-r from-orange-50 to-orange-100 border-orange-200"
       />
 
@@ -143,12 +132,12 @@ export function InventoryMetricsCards({ initialMetrics, className }: InventoryMe
       <StatCard
         title="Weekly Waste"
         value={formatCurrency(metrics.wasteValue)}
-        icon={Trash2}
-        description="This week's total"
+        icon={<Trash2 className="h-4 w-4" />}
+        subtitle="This week's total"
         trend={{
-          value: wasteTrend.trend,
-          isPositive: wasteTrend.color.includes('green'),
-          label: 'vs last week'
+          value: 8,
+          direction: wasteTrend.color.includes('green') ? 'down' : 'up',
+          period: 'last week'
         }}
         className="bg-gradient-to-r from-red-50 to-red-100 border-red-200"
       />
@@ -167,7 +156,7 @@ export function InventoryMetricsCards({ initialMetrics, className }: InventoryMe
                 <p className="text-sm text-gray-500 ml-1">annually</p>
               </div>
             </div>
-            <turnoverTrend.icon className={`h-5 w-5 ${turnoverTrend.color}`} />
+            {React.createElement(turnoverTrend.icon, { className: `h-5 w-5 ${turnoverTrend.color}` })}
           </div>
           <div className="mt-2">
             <p className={`text-xs ${turnoverTrend.color}`}>

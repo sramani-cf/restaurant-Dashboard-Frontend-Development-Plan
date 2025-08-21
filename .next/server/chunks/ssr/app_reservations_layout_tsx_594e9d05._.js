@@ -1,0 +1,3 @@
+module.exports=[48962,a=>{"use strict";a.s(["default",()=>d,"metadata",()=>c]);var b=a.i(7997);let c={title:"Reservations & Tables | Restaurant Dashboard",description:"Manage restaurant reservations, table assignments, waitlist, and guest database"};function d({children:a}){return(0,b.jsx)("div",{className:"min-h-screen bg-gray-50",children:(0,b.jsx)("div",{className:"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8",children:a})})}}];
+
+//# sourceMappingURL=app_reservations_layout_tsx_594e9d05._.js.map

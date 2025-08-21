@@ -5,7 +5,7 @@
 
 import DOMPurify from 'dompurify';
 import validator from 'validator';
-import { SECURITY_PATTERNS } from '../../security.config';
+import { SECURITY_PATTERNS } from '../../config/security.config';
 
 // Sanitization Configuration
 const SANITIZATION_CONFIG = {

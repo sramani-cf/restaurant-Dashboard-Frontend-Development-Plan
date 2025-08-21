@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { SECURITY_CONFIG } from '../../security.config';
+import { SECURITY_CONFIG } from '../../config/security.config';
 
 // CSRF Token Interface
 interface CSRFTokenData {

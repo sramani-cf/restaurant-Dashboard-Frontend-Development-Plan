@@ -13,7 +13,7 @@ import {
   scryptSync,
   timingSafeEqual
 } from 'crypto';
-import { SECURITY_CONFIG } from '../../security.config';
+import { SECURITY_CONFIG } from '../../config/security.config';
 import bcrypt from 'bcryptjs';
 
 // Encryption Configuration

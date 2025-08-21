@@ -1,5 +1,222 @@
 @import "tailwindcss";
 
+/* Critical CSS for initial render */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+@media (prefers-color-scheme: dark) {
+  .loading-screen {
+    background: #0a0a0a;
+  }
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #f3890d;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Prevent layout shift */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessibility Enhancement Styles */
+
+/* Focus management */
+.focus-visible {
+  outline: 2px solid hsl(var(--ring, 210 100% 50%));
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --primary: 210 100% 25%;
+    --primary-foreground: 0 0% 100%;
+    --border: 0 0% 0%;
+    --input: 0 0% 100%;
+    --ring: 210 100% 50%;
+  }
+}
+
+.high-contrast {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --primary: 210 100% 25%;
+  --primary-foreground: 0 0% 100%;
+  --border: 0 0% 0%;
+  --input: 0 0% 100%;
+  --ring: 210 100% 50%;
+  filter: contrast(150%);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.sr-only.focus:not(.focus\:not-sr-only):focus,
+.focus\:not-sr-only:focus {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: inherit !important;
+  margin: inherit !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+}
+
+/* Skip link styles */
+.skip-link {
+  transform: translateY(-100%);
+  transition: transform 0.2s ease-in-out;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Font size preferences */
+.font-small { font-size: 0.875rem; line-height: 1.5; }
+.font-medium { font-size: 1rem; line-height: 1.5; }
+.font-large { font-size: 1.125rem; line-height: 1.6; }
+.font-extra-large { font-size: 1.25rem; line-height: 1.6; }
+
+/* Focus rings visibility */
+.focus-rings-visible :focus {
+  outline: 2px solid hsl(var(--ring, 210 100% 50%));
+  outline-offset: 2px;
+}
+
+.focus-rings-visible :focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Mobile accessibility improvements */
+@media (max-width: 768px) {
+  .mobile-a11y {
+    --min-touch-size: 44px;
+  }
+  
+  .mobile-a11y button,
+  .mobile-a11y [role="button"],
+  .mobile-a11y a {
+    min-height: var(--min-touch-size);
+    min-width: var(--min-touch-size);
+    padding: 8px;
+  }
+  
+  /* Larger text on mobile for better readability */
+  .mobile-a11y {
+    font-size: 1.125rem;
+  }
+}
+
+/* Print accessibility */
+@media print {
+  .sr-only {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+  }
+  
+  /* Show URLs for links in print */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+  
+  /* Ensure sufficient contrast in print */
+  * {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* Windows High Contrast Mode support */
+@media screen and (-ms-high-contrast: active) {
+  * {
+    border-color: windowText !important;
+    color: windowText !important;
+  }
+  
+  .focus-visible {
+    outline: 2px solid highlight !important;
+  }
+}
+
+/* Forced colors mode support (Windows) */
+@media (forced-colors: active) {
+  * {
+    border-color: CanvasText !important;
+    color: CanvasText !important;
+    background: Canvas !important;
+  }
+  
+  .focus-visible {
+    outline: 2px solid Highlight !important;
+    outline-offset: 2px;
+  }
+}
+
 /* Restaurant Dashboard Design Tokens */
 :root {
   /* Brand Colors */

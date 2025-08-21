@@ -1,0 +1,125 @@
+{
+  "node": {
+    "60da97403df77a32677291ba24e46f04df12a8b480": {
+      "workers": {
+        "app/reservations/page": {
+          "moduleId": "37571",
+          "async": false,
+          "exportedName": "updateReservationAction",
+          "filename": "app/reservations/actions.ts"
+        }
+      },
+      "layer": {
+        "app/reservations/page": "action-browser"
+      },
+      "exportedName": "updateReservationAction",
+      "filename": "app/reservations/actions.ts"
+    },
+    "60914b440cc33feca29dd81bfddf1cf97dbebdba13": {
+      "workers": {
+        "app/reservations/page": {
+          "moduleId": "37571",
+          "async": false,
+          "exportedName": "seatReservationAction",
+          "filename": "app/reservations/actions.ts"
+        }
+      },
+      "layer": {
+        "app/reservations/page": "action-browser"
+      },
+      "exportedName": "seatReservationAction",
+      "filename": "app/reservations/actions.ts"
+    },
+    "6042007cc1c3fa5dfa785c91858b90cbff06afff87": {
+      "workers": {
+        "app/reservations/page": {
+          "moduleId": "37571",
+          "async": false,
+          "exportedName": "cancelReservationAction",
+          "filename": "app/reservations/actions.ts"
+        }
+      },
+      "layer": {
+        "app/reservations/page": "action-browser"
+      },
+      "exportedName": "cancelReservationAction",
+      "filename": "app/reservations/actions.ts"
+    },
+    "40d53966cd22908b34c3a388219981590c16f1b09c": {
+      "workers": {
+        "app/reservations/page": {
+          "moduleId": "37571",
+          "async": false,
+          "exportedName": "createReservationAction",
+          "filename": "app/reservations/actions.ts"
+        }
+      },
+      "layer": {
+        "app/reservations/page": "action-browser"
+      },
+      "exportedName": "createReservationAction",
+      "filename": "app/reservations/actions.ts"
+    },
+    "4024748d30c4fcef516363c66fa5b418d80eeaf8c7": {
+      "workers": {
+        "app/reservations/page": {
+          "moduleId": "37571",
+          "async": false,
+          "exportedName": "addToWaitlistAction",
+          "filename": "app/reservations/actions.ts"
+        }
+      },
+      "layer": {
+        "app/reservations/page": "action-browser"
+      },
+      "exportedName": "addToWaitlistAction",
+      "filename": "app/reservations/actions.ts"
+    },
+    "604d883b7d27fa43d93da04432e8172984fbefa056": {
+      "workers": {
+        "app/reservations/page": {
+          "moduleId": "37571",
+          "async": false,
+          "exportedName": "updateWaitlistEntryAction",
+          "filename": "app/reservations/actions.ts"
+        }
+      },
+      "layer": {
+        "app/reservations/page": "action-browser"
+      },
+      "exportedName": "updateWaitlistEntryAction",
+      "filename": "app/reservations/actions.ts"
+    },
+    "60372304174c5128ffdb48de6d0db7514f4ed30799": {
+      "workers": {
+        "app/reservations/page": {
+          "moduleId": "37571",
+          "async": false,
+          "exportedName": "seatFromWaitlistAction",
+          "filename": "app/reservations/actions.ts"
+        }
+      },
+      "layer": {
+        "app/reservations/page": "action-browser"
+      },
+      "exportedName": "seatFromWaitlistAction",
+      "filename": "app/reservations/actions.ts"
+    },
+    "6047ae1e34a20b56161977a5db84b60a8227efbe8f": {
+      "workers": {
+        "app/reservations/page": {
+          "moduleId": "37571",
+          "async": false,
+          "exportedName": "updateTableStatusAction",
+          "filename": "app/reservations/actions.ts"
+        }
+      },
+      "layer": {
+        "app/reservations/page": "action-browser"
+      },
+      "exportedName": "updateTableStatusAction",
+      "filename": "app/reservations/actions.ts"
+    }
+  },
+  "edge": {}
+}

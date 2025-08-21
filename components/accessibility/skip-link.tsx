@@ -8,7 +8,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 /**
  * Skip link configuration
@@ -104,6 +104,7 @@ export const SkipLink: React.FC<SkipLinkProps> = ({
       href={href}
       title={title}
       onClick={handleClick}
+      suppressHydrationWarning
       className={cn(
         // Base styles - hidden by default
         'absolute left-4 top-4 z-50',
@@ -151,6 +152,7 @@ export const SkipLinks: React.FC<SkipLinksProps> = ({
       role="navigation"
       aria-label="Skip links"
       className={cn('skip-links-container', className)}
+      suppressHydrationWarning
     >
       {/* Default skip links */}
       {links.map((link, index) => (

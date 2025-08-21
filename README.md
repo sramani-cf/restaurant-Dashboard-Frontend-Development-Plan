@@ -33,7 +33,7 @@ A comprehensive, modern restaurant management dashboard built with Next.js 15, T
 - **UI Components**: Headless UI, TanStack Table v8, Recharts
 - **Database**: PostgreSQL with Prisma ORM
 - **Caching**: Redis
-- **Deployment**: Vercel/AWS/Docker
+- **Deployment**: Self-hosted or custom deployment
 - **Testing**: Jest, React Testing Library, Playwright
 - **Monitoring**: Sentry, Google Analytics
 
@@ -78,14 +78,15 @@ npm run type-check   # Run TypeScript compiler
 
 ## Deployment
 
-### Vercel
+To deploy the application, run:
 ```bash
-vercel --prod
+npm run build
+npm run start
 ```
 
-### Docker
+For custom deployment, use the deployment script:
 ```bash
-docker-compose up -d
+./scripts/deploy.sh --environment production
 ```
 
 ## License

@@ -1,0 +1,140 @@
+{
+  "node": {
+    "001f424fe93abbb175c0049ed79fc23cbabfe33c4d": {
+      "workers": {
+        "app/dashboard/page": {
+          "moduleId": "24248",
+          "async": false,
+          "exportedName": "revalidateDashboardData",
+          "filename": "lib/dashboard/data.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/page": "rsc"
+      },
+      "exportedName": "revalidateDashboardData",
+      "filename": "lib/dashboard/data.ts"
+    },
+    "00f7231f9c37fb4c63ead199dd1ab052387ae6f856": {
+      "workers": {
+        "app/dashboard/page": {
+          "moduleId": "24248",
+          "async": false,
+          "exportedName": "revalidateLiveData",
+          "filename": "lib/dashboard/data.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/page": "action-browser"
+      },
+      "exportedName": "revalidateLiveData",
+      "filename": "lib/dashboard/data.ts"
+    },
+    "40d8417e0b1fc0fb1626c8e8fb8f687638b2e261ac": {
+      "workers": {
+        "app/dashboard/page": {
+          "moduleId": "24248",
+          "async": false,
+          "exportedName": "getDashboardData",
+          "filename": "lib/dashboard/data.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/page": "action-browser"
+      },
+      "exportedName": "getDashboardData",
+      "filename": "lib/dashboard/data.ts"
+    },
+    "7f1e682b963e36fb81ab0b0ef742d70ba185864eb7": {
+      "workers": {
+        "app/dashboard/page": {
+          "moduleId": "24248",
+          "async": false,
+          "exportedName": "getSalesTrendData",
+          "filename": "lib/dashboard/data.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/page": "rsc"
+      },
+      "exportedName": "getSalesTrendData",
+      "filename": "lib/dashboard/data.ts"
+    },
+    "7f1fcf78b6623ee6d21300381f74e00c65c59b76dd": {
+      "workers": {
+        "app/dashboard/page": {
+          "moduleId": "24248",
+          "async": false,
+          "exportedName": "getStaffPerformance",
+          "filename": "lib/dashboard/data.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/page": "rsc"
+      },
+      "exportedName": "getStaffPerformance",
+      "filename": "lib/dashboard/data.ts"
+    },
+    "7f5f1677920fbbfe8d891f91fb5253e570bf3da78d": {
+      "workers": {
+        "app/dashboard/page": {
+          "moduleId": "24248",
+          "async": false,
+          "exportedName": "getLiveReservations",
+          "filename": "lib/dashboard/data.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/page": "rsc"
+      },
+      "exportedName": "getLiveReservations",
+      "filename": "lib/dashboard/data.ts"
+    },
+    "7f9172007dfe0846695705c9e3f62deabe91e15f68": {
+      "workers": {
+        "app/dashboard/page": {
+          "moduleId": "24248",
+          "async": false,
+          "exportedName": "getDashboardKPIs",
+          "filename": "lib/dashboard/data.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/page": "rsc"
+      },
+      "exportedName": "getDashboardKPIs",
+      "filename": "lib/dashboard/data.ts"
+    },
+    "7fab0a375d8c208de8b34f1d3593ddcf4457fbc654": {
+      "workers": {
+        "app/dashboard/page": {
+          "moduleId": "24248",
+          "async": false,
+          "exportedName": "getLiveOrders",
+          "filename": "lib/dashboard/data.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/page": "rsc"
+      },
+      "exportedName": "getLiveOrders",
+      "filename": "lib/dashboard/data.ts"
+    },
+    "7fc7320ae4c03844ed11fcf374de7869382830e9e8": {
+      "workers": {
+        "app/dashboard/page": {
+          "moduleId": "24248",
+          "async": false,
+          "exportedName": "getTopProducts",
+          "filename": "lib/dashboard/data.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/page": "rsc"
+      },
+      "exportedName": "getTopProducts",
+      "filename": "lib/dashboard/data.ts"
+    }
+  },
+  "edge": {}
+}

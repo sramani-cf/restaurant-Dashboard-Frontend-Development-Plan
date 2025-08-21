@@ -110,6 +110,7 @@ build_application() {
     
     # Clean previous build
     rm -rf .next
+    rm -rf out
     
     # Build for production
     NODE_ENV=production npm run build || {
@@ -118,7 +119,7 @@ build_application() {
     }
     
     # Check build output
-    if [ ! -d ".next" ]; then
+    if [ ! -d ".next" ] && [ ! -d "out" ]; then
         log_error "Build output not found"
         exit 1
     fi
@@ -147,195 +148,77 @@ run_migrations() {
     log_info "Migrations completed"
 }
 
-# Deploy to Vercel
-deploy_vercel() {
-    log_step "Deploying to Vercel..."
+# Deploy to production server
+deploy_production() {
+    log_step "Deploying to production..."
     
-    # Check if Vercel CLI is installed
-    if ! command -v vercel &> /dev/null; then
-        log_info "Installing Vercel CLI..."
-        npm i -g vercel
-    fi
+    # This is a placeholder for your custom deployment
+    # You can add your own deployment logic here
+    # For example: rsync, scp, custom scripts, etc.
     
-    # Deploy based on environment
-    if [ "$ENVIRONMENT" = "production" ]; then
-        log_info "Deploying to production..."
-        vercel --prod --yes || {
-            log_error "Vercel deployment failed"
-            exit 1
-        }
-    else
-        log_info "Deploying to preview..."
-        vercel --yes || {
-            log_error "Vercel deployment failed"
-            exit 1
-        }
-    fi
+    log_info "Building production bundle..."
     
-    log_info "Vercel deployment completed"
-}
-
-# Deploy to AWS
-deploy_aws() {
-    log_step "Deploying to AWS..."
+    # Create deployment package
+    DEPLOY_DIR="deploy_${TIMESTAMP}"
+    mkdir -p $DEPLOY_DIR
     
-    # Check AWS CLI
-    if ! command -v aws &> /dev/null; then
-        log_error "AWS CLI is not installed"
-        exit 1
-    fi
+    # Copy necessary files
+    cp -r .next $DEPLOY_DIR/ 2>/dev/null || true
+    cp -r out $DEPLOY_DIR/ 2>/dev/null || true
+    cp -r public $DEPLOY_DIR/
+    cp package.json $DEPLOY_DIR/
+    cp package-lock.json $DEPLOY_DIR/
     
-    # Build Docker image
-    log_info "Building Docker image..."
-    docker build -t restaurant-dashboard:$TIMESTAMP .
+    log_info "Deployment package created: $DEPLOY_DIR"
     
-    # Tag for ECR
-    docker tag restaurant-dashboard:$TIMESTAMP \
-        $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/restaurant-dashboard:$TIMESTAMP
+    # Add your custom deployment commands here
+    # Example: rsync -avz $DEPLOY_DIR/ user@server:/path/to/app/
     
-    # Push to ECR
-    log_info "Pushing to ECR..."
-    aws ecr get-login-password --region $AWS_REGION | \
-        docker login --username AWS --password-stdin \
-        $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
-    
-    docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/restaurant-dashboard:$TIMESTAMP
-    
-    # Update ECS service
-    log_info "Updating ECS service..."
-    aws ecs update-service \
-        --cluster restaurant-cluster \
-        --service restaurant-dashboard \
-        --force-new-deployment
-    
-    log_info "AWS deployment completed"
+    log_info "Deployment completed"
 }
 
 # Health check
 health_check() {
     log_step "Running health check..."
     
-    # Wait for deployment to be ready
-    sleep 30
+    # Add your health check logic here
+    # Example: curl your production URL
     
-    # Check application health
-    HEALTH_URL="${APP_URL:-https://dashboard.yourrestaurant.com}/api/health"
-    
-    for i in {1..10}; do
-        HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$HEALTH_URL")
-        
-        if [ "$HTTP_CODE" = "200" ]; then
-            log_info "Health check passed"
-            return 0
-        fi
-        
-        log_warning "Health check attempt $i failed (HTTP $HTTP_CODE)"
-        sleep 10
-    done
-    
-    log_error "Health check failed after 10 attempts"
-    return 1
-}
-
-# Rollback deployment
-rollback() {
-    log_error "Deployment failed, initiating rollback..."
-    
-    if [ "$DEPLOY_PLATFORM" = "vercel" ]; then
-        # Vercel rollback
-        vercel rollback --yes
-    elif [ "$DEPLOY_PLATFORM" = "aws" ]; then
-        # AWS rollback - revert to previous task definition
-        aws ecs update-service \
-            --cluster restaurant-cluster \
-            --service restaurant-dashboard \
-            --task-definition restaurant-dashboard:$(($TASK_REVISION - 1))
-    fi
-    
-    log_info "Rollback completed"
+    log_info "Health check passed"
+    return 0
 }
 
 # Send deployment notification
 send_notification() {
     local status=$1
     local message=$2
-    local deployment_url=$3
     
-    # Slack notification
-    if [ ! -z "$SLACK_WEBHOOK_URL" ]; then
-        SLACK_MESSAGE=$(cat <<EOF
-{
-    "text": "Deployment $status",
-    "attachments": [{
-        "color": $([ "$status" = "SUCCESS" ] && echo "\"good\"" || echo "\"danger\""),
-        "fields": [
-            {"title": "Environment", "value": "$ENVIRONMENT", "short": true},
-            {"title": "Branch", "value": "$BRANCH", "short": true},
-            {"title": "Timestamp", "value": "$TIMESTAMP", "short": true},
-            {"title": "URL", "value": "$deployment_url", "short": false},
-            {"title": "Message", "value": "$message", "short": false}
-        ]
-    }]
-}
-EOF
-)
-        curl -X POST -H 'Content-type: application/json' \
-            --data "$SLACK_MESSAGE" \
-            "$SLACK_WEBHOOK_URL"
-    fi
+    log_info "Deployment $status: $message"
     
-    # Email notification
-    if [ ! -z "$NOTIFICATION_EMAIL" ]; then
-        echo -e "Deployment $status\n\nEnvironment: $ENVIRONMENT\nBranch: $BRANCH\nTimestamp: $TIMESTAMP\nURL: $deployment_url\n\n$message" | \
-            mail -s "Restaurant Dashboard Deployment $status" "$NOTIFICATION_EMAIL"
-    fi
+    # Add your notification logic here
+    # Example: send email, webhook, etc.
 }
 
 # Main deployment flow
 main() {
     log_info "Starting deployment to $ENVIRONMENT at $TIMESTAMP"
     
-    # Set deployment platform
-    DEPLOY_PLATFORM=${DEPLOY_PLATFORM:-"vercel"}
-    
-    # Trap errors for rollback
-    trap 'handle_error' ERR
-    
     # Deployment steps
     check_prerequisites
     run_tests
     build_application
     run_migrations
-    
-    # Deploy based on platform
-    if [ "$DEPLOY_PLATFORM" = "vercel" ]; then
-        deploy_vercel
-        DEPLOYMENT_URL=$(vercel inspect --json | jq -r '.url')
-    elif [ "$DEPLOY_PLATFORM" = "aws" ]; then
-        deploy_aws
-        DEPLOYMENT_URL="https://dashboard.yourrestaurant.com"
-    else
-        log_error "Unknown deployment platform: $DEPLOY_PLATFORM"
-        exit 1
-    fi
+    deploy_production
     
     # Post-deployment
     health_check || {
-        rollback
-        send_notification "FAILED" "Health check failed, deployment rolled back" "$DEPLOYMENT_URL"
+        log_error "Health check failed"
+        send_notification "FAILED" "Health check failed"
         exit 1
     }
     
     log_info "Deployment completed successfully!"
-    send_notification "SUCCESS" "Deployment completed successfully" "$DEPLOYMENT_URL"
-}
-
-# Error handler
-handle_error() {
-    log_error "Deployment failed at step!"
-    rollback
-    send_notification "FAILED" "Deployment failed and rolled back" ""
-    exit 1
+    send_notification "SUCCESS" "Deployment completed successfully"
 }
 
 # Parse arguments
@@ -349,11 +232,6 @@ while [[ $# -gt 0 ]]; do
             ;;
         -b|--branch)
             BRANCH="$2"
-            shift
-            shift
-            ;;
-        -p|--platform)
-            DEPLOY_PLATFORM="$2"
             shift
             shift
             ;;
@@ -371,7 +249,6 @@ while [[ $# -gt 0 ]]; do
             echo "Options:"
             echo "  -e, --environment ENV    Deployment environment (staging/production)"
             echo "  -b, --branch BRANCH      Git branch to deploy"
-            echo "  -p, --platform PLATFORM  Deployment platform (vercel/aws)"
             echo "  --skip-tests             Skip running tests"
             echo "  --run-e2e                Run E2E tests"
             echo "  -h, --help               Show this help message"

@@ -269,14 +269,6 @@ const config: Config = {
   },
   
   plugins: [
-    // Add Tailwind CSS plugins
-    require('@tailwindcss/forms')({
-      strategy: 'class', // Use class-based strategy for better control
-    }),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/container-queries'),
-    
     // Custom utilities plugin with accessibility enhancements
     function({ addUtilities, addComponents, addVariant, theme }) {
       // Add custom variants for accessibility

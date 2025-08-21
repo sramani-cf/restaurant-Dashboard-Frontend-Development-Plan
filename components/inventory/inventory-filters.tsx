@@ -6,7 +6,7 @@ import { Search, Filter, X, Package, Users, MapPin, Tag } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { getProductCategories, getSuppliers, getLocations } from '@/lib/inventory/data';
 import type { InventoryFilters as InventoryFiltersType, ProductCategory, Supplier, Location } from '@/lib/inventory/types';
 

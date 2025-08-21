@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Restaurant Dashboard Backup Script
-# This script backs up the database and uploaded files to S3
+# This script backs up the database and uploaded files
 
 set -e
 
 # Configuration
 BACKUP_DIR="/tmp/restaurant-backup"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-S3_BUCKET=${BACKUP_S3_BUCKET:-"restaurant-dashboard-backups"}
+BACKUP_DESTINATION=${BACKUP_DESTINATION:-"./backups"}
 DB_NAME=${DATABASE_NAME:-"restaurant_dashboard"}
 RETENTION_DAYS=${BACKUP_RETENTION_DAYS:-30}
 
@@ -35,6 +35,7 @@ log_warning() {
 create_backup_dir() {
     log_info "Creating backup directory..."
     mkdir -p "$BACKUP_DIR"
+    mkdir -p "$BACKUP_DESTINATION"
 }
 
 # Backup database
@@ -85,77 +86,55 @@ backup_files() {
     fi
 }
 
-# Upload to S3
-upload_to_s3() {
-    log_info "Uploading backups to S3..."
+# Backup environment files
+backup_env() {
+    log_info "Backing up environment configuration..."
     
-    # Check if AWS CLI is configured
-    if ! command -v aws &> /dev/null; then
-        log_error "AWS CLI is not installed"
-        exit 1
-    fi
-    
-    # Upload database backup
-    if [ -f "$BACKUP_DIR/database_${TIMESTAMP}.sql.gz" ]; then
-        aws s3 cp \
-            "$BACKUP_DIR/database_${TIMESTAMP}.sql.gz" \
-            "s3://$S3_BUCKET/database/database_${TIMESTAMP}.sql.gz" \
-            --storage-class STANDARD_IA
-        
-        log_info "Database backup uploaded to S3"
-    fi
-    
-    # Upload files backup
-    if [ -f "$BACKUP_DIR/files_${TIMESTAMP}.tar.gz" ]; then
-        aws s3 cp \
-            "$BACKUP_DIR/files_${TIMESTAMP}.tar.gz" \
-            "s3://$S3_BUCKET/files/files_${TIMESTAMP}.tar.gz" \
-            --storage-class STANDARD_IA
-        
-        log_info "Files backup uploaded to S3"
-    fi
-}
-
-# Clean up old backups
-cleanup_old_backups() {
-    log_info "Cleaning up old backups (older than $RETENTION_DAYS days)..."
-    
-    # Calculate date for deletion
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        # macOS
-        DELETE_DATE=$(date -v -${RETENTION_DAYS}d +%Y-%m-%d)
+    if [ -f ".env.local" ]; then
+        cp .env.local "$BACKUP_DIR/env_${TIMESTAMP}.txt"
+        log_info "Environment backup completed: env_${TIMESTAMP}.txt"
     else
-        # Linux
-        DELETE_DATE=$(date -d "$RETENTION_DAYS days ago" +%Y-%m-%d)
+        log_warning "No .env.local file found"
     fi
-    
-    # Delete old database backups
-    aws s3 ls "s3://$S3_BUCKET/database/" | while read -r line; do
-        FILE_DATE=$(echo $line | awk '{print $1}')
-        FILE_NAME=$(echo $line | awk '{print $4}')
-        
-        if [[ "$FILE_DATE" < "$DELETE_DATE" ]]; then
-            aws s3 rm "s3://$S3_BUCKET/database/$FILE_NAME"
-            log_info "Deleted old backup: $FILE_NAME"
-        fi
-    done
-    
-    # Delete old file backups
-    aws s3 ls "s3://$S3_BUCKET/files/" | while read -r line; do
-        FILE_DATE=$(echo $line | awk '{print $1}')
-        FILE_NAME=$(echo $line | awk '{print $4}')
-        
-        if [[ "$FILE_DATE" < "$DELETE_DATE" ]]; then
-            aws s3 rm "s3://$S3_BUCKET/files/$FILE_NAME"
-            log_info "Deleted old backup: $FILE_NAME"
-        fi
-    done
 }
 
-# Clean up local backup directory
-cleanup_local() {
-    log_info "Cleaning up local backup directory..."
-    rm -rf "$BACKUP_DIR"
+# Save backups to destination
+save_backups() {
+    log_info "Saving backups to destination..."
+    
+    # Move all backup files to destination directory
+    if [ -f "$BACKUP_DIR/database_${TIMESTAMP}.sql.gz" ]; then
+        mv "$BACKUP_DIR/database_${TIMESTAMP}.sql.gz" "$BACKUP_DESTINATION/"
+        log_info "Database backup saved to: $BACKUP_DESTINATION/database_${TIMESTAMP}.sql.gz"
+    fi
+    
+    if [ -f "$BACKUP_DIR/files_${TIMESTAMP}.tar.gz" ]; then
+        mv "$BACKUP_DIR/files_${TIMESTAMP}.tar.gz" "$BACKUP_DESTINATION/"
+        log_info "Files backup saved to: $BACKUP_DESTINATION/files_${TIMESTAMP}.tar.gz"
+    fi
+    
+    if [ -f "$BACKUP_DIR/env_${TIMESTAMP}.txt" ]; then
+        mv "$BACKUP_DIR/env_${TIMESTAMP}.txt" "$BACKUP_DESTINATION/"
+        log_info "Environment backup saved to: $BACKUP_DESTINATION/env_${TIMESTAMP}.txt"
+    fi
+    
+    # Create a combined archive
+    cd "$BACKUP_DESTINATION"
+    tar -czf "full_backup_${TIMESTAMP}.tar.gz" \
+        database_${TIMESTAMP}.sql.gz \
+        files_${TIMESTAMP}.tar.gz \
+        env_${TIMESTAMP}.txt 2>/dev/null || true
+    
+    log_info "Combined backup created: $BACKUP_DESTINATION/full_backup_${TIMESTAMP}.tar.gz"
+}
+
+# Clean old backups
+clean_old_backups() {
+    log_info "Cleaning old backups (older than $RETENTION_DAYS days)..."
+    
+    find "$BACKUP_DESTINATION" -name "*.gz" -type f -mtime +$RETENTION_DAYS -delete
+    
+    log_info "Old backups cleaned"
 }
 
 # Send notification
@@ -163,44 +142,80 @@ send_notification() {
     local status=$1
     local message=$2
     
-    # Send to Slack webhook if configured
-    if [ ! -z "$SLACK_WEBHOOK_URL" ]; then
-        curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"Backup ${status}: ${message}\"}" \
-            "$SLACK_WEBHOOK_URL"
+    # Add your notification logic here
+    # Example: send email, webhook, etc.
+    log_info "Backup $status: $message"
+}
+
+# Restore database
+restore_database() {
+    local backup_file=$1
+    
+    if [ -z "$backup_file" ]; then
+        log_error "Please provide a backup file to restore"
+        exit 1
     fi
     
-    # Send email if configured
-    if [ ! -z "$NOTIFICATION_EMAIL" ]; then
-        echo "$message" | mail -s "Restaurant Dashboard Backup ${status}" "$NOTIFICATION_EMAIL"
+    if [ ! -f "$backup_file" ]; then
+        log_error "Backup file not found: $backup_file"
+        exit 1
     fi
+    
+    log_info "Restoring database from: $backup_file"
+    
+    # Extract if compressed
+    if [[ $backup_file == *.gz ]]; then
+        gunzip -c "$backup_file" | PGPASSWORD=$DB_PASS psql \
+            -h $DB_HOST \
+            -p $DB_PORT \
+            -U $DB_USER \
+            -d $DB_NAME
+    else
+        PGPASSWORD=$DB_PASS psql \
+            -h $DB_HOST \
+            -p $DB_PORT \
+            -U $DB_USER \
+            -d $DB_NAME \
+            < "$backup_file"
+    fi
+    
+    log_info "Database restoration completed"
 }
 
 # Main execution
 main() {
-    log_info "Starting backup process at ${TIMESTAMP}"
+    case "${1:-backup}" in
+        backup)
+            log_info "Starting backup process..."
+            create_backup_dir
+            backup_database
+            backup_files
+            backup_env
+            save_backups
+            clean_old_backups
+            send_notification "SUCCESS" "Backup completed successfully"
+            log_info "Backup process completed successfully!"
+            ;;
+        restore)
+            log_info "Starting restoration process..."
+            restore_database "$2"
+            send_notification "SUCCESS" "Restoration completed successfully"
+            log_info "Restoration process completed successfully!"
+            ;;
+        clean)
+            log_info "Cleaning old backups..."
+            clean_old_backups
+            log_info "Cleanup completed!"
+            ;;
+        *)
+            echo "Usage: $0 {backup|restore <backup_file>|clean}"
+            exit 1
+            ;;
+    esac
     
-    # Trap errors
-    trap 'handle_error' ERR
-    
-    create_backup_dir
-    backup_database
-    backup_files
-    upload_to_s3
-    cleanup_old_backups
-    cleanup_local
-    
-    log_info "Backup completed successfully!"
-    send_notification "SUCCESS" "Backup completed at ${TIMESTAMP}"
+    # Cleanup temporary directory
+    rm -rf "$BACKUP_DIR"
 }
 
-# Error handler
-handle_error() {
-    log_error "Backup failed!"
-    send_notification "FAILED" "Backup failed at ${TIMESTAMP}"
-    cleanup_local
-    exit 1
-}
-
-# Run the backup
-main
+# Run the script
+main "$@"

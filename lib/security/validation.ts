@@ -4,7 +4,7 @@
  */
 
 import { z } from 'zod';
-import { SECURITY_PATTERNS } from '../../security.config';
+import { SECURITY_PATTERNS } from '../../config/security.config';
 
 // Base validation utilities
 const createSecureString = (minLength = 1, maxLength = 255) =>

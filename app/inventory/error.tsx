@@ -120,7 +120,7 @@ export default function InventoryError({ error, reset }: InventoryErrorProps) {
           <Button
             onClick={reset}
             className="w-full flex items-center justify-center"
-            variant="default"
+            variant="primary"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
             Try Again

@@ -13,7 +13,7 @@ import { LoginSchema } from '../../../../lib/security/validation';
 import { hashPassword, verifyPassword, generateSecureRandom } from '../../../../lib/security/encryption';
 import { createSession, getSession } from '../../../../lib/security/session';
 import { applyRateLimit } from '../../../../lib/security/rate-limit';
-import { SECURITY_CONFIG, SECURITY_EVENTS } from '../../../../security.config';
+import { SECURITY_CONFIG, SECURITY_EVENTS } from '../../../../config/security.config';
 
 // Extended User interface for additional security fields
 interface SecureUser extends User {

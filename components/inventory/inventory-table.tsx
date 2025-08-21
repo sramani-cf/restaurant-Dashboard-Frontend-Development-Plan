@@ -20,7 +20,7 @@ import { Dropdown } from '@/components/ui/dropdown';
 import { formatCurrency, formatQuantity } from '@/lib/inventory/calculations';
 import { getInventoryItems } from '@/lib/inventory/data';
 import type { InventoryItem, InventoryFilters, InventoryResponse } from '@/lib/inventory/types';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 interface InventoryTableProps {
   initialData?: InventoryResponse;

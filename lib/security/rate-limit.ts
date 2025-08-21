@@ -4,9 +4,10 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { RateLimiterRedis, RateLimiterMemory, RateLimiterRes } from 'rate-limiter-flexible';
-import { SECURITY_CONFIG, SECURITY_EVENTS } from '../../security.config';
-import Redis from 'ioredis';
+import { RateLimiterMemory, RateLimiterRes } from 'rate-limiter-flexible';
+import { SECURITY_CONFIG, SECURITY_EVENTS } from '../../config/security.config';
+// Note: Redis support removed for Edge runtime compatibility
+// import Redis from 'ioredis';
 
 // Rate Limiter Configuration
 interface RateLimitConfig {
@@ -23,35 +24,15 @@ interface RateLimitConfig {
 
 // Rate Limiter Instance
 interface RateLimiterInstance {
-  limiter: RateLimiterRedis | RateLimiterMemory;
+  limiter: RateLimiterMemory;
   config: RateLimitConfig;
 }
 
 // Global rate limiters
 const rateLimiters = new Map<string, RateLimiterInstance>();
-let redisClient: Redis | null = null;
 
-// Initialize Redis connection
-function getRedisClient(): Redis | null {
-  if (process.env.REDIS_URL && !redisClient) {
-    try {
-      redisClient = new Redis(process.env.REDIS_URL, {
-        retryDelayOnFailover: 100,
-        maxRetriesPerRequest: 3,
-        lazyConnect: true,
-      });
-      
-      redisClient.on('error', (error) => {
-        console.error('Redis rate limiter error:', error);
-      });
-    } catch (error) {
-      console.error('Failed to connect to Redis:', error);
-      redisClient = null;
-    }
-  }
-  
-  return redisClient;
-}
+// Note: Redis connection removed for Edge runtime compatibility
+// In production, consider using Upstash Redis or KV storage for Edge-compatible persistence
 
 /**
  * Create a rate limiter instance
@@ -60,8 +41,6 @@ export function createRateLimiter(
   name: string,
   config: RateLimitConfig
 ): RateLimiterInstance {
-  const redis = getRedisClient();
-  
   const limiterOptions = {
     keyPrefix: `rate_limit_${name}`,
     points: config.maxRequests,
@@ -70,9 +49,8 @@ export function createRateLimiter(
     execEvenly: true, // Spread requests evenly across the duration
   };
   
-  const limiter = redis
-    ? new RateLimiterRedis({ storeClient: redis, ...limiterOptions })
-    : new RateLimiterMemory(limiterOptions);
+  // Using memory-only rate limiter for Edge runtime compatibility
+  const limiter = new RateLimiterMemory(limiterOptions);
   
   const instance = { limiter, config };
   rateLimiters.set(name, instance);
@@ -477,10 +455,8 @@ function logSecurityEvent(event: string, details: any): void {
  * Cleanup function for graceful shutdown
  */
 export async function cleanup(): Promise<void> {
-  if (redisClient) {
-    await redisClient.quit();
-    redisClient = null;
-  }
+  // Cleanup not needed for memory-only rate limiter
+  // In production with persistent storage, implement cleanup here
 }
 
 // Initialize default rate limiters on module load

@@ -8,7 +8,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { FocusTrap as FocusTrapUtil, FocusManager } from '@/lib/accessibility/keyboard';
 
 /**

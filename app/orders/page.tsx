@@ -1,7 +1,9 @@
 import { Suspense } from 'react';
+import Link from 'next/link';
 import { OrdersContent } from './orders-content';
 import { OrdersSkeleton } from './orders-skeleton';
 import { PageHeader } from '@/components/ui/page-header';
+import { Button } from '@/components/ui/button';
 
 export default async function OrdersPage({
   searchParams
@@ -19,18 +21,16 @@ export default async function OrdersPage({
       <PageHeader
         title="Order Management"
         description="View and manage all restaurant orders"
-        actions={[
-          {
-            label: 'New Order',
-            href: '/orders/new',
-            variant: 'primary'
-          },
-          {
-            label: 'Export',
-            onClick: () => {},
-            variant: 'secondary'
-          }
-        ]}
+        actions={
+          <div className="flex space-x-2">
+            <Link href="/orders/new">
+              <Button variant="primary">New Order</Button>
+            </Link>
+            <Link href="/orders/export">
+              <Button variant="secondary">Export</Button>
+            </Link>
+          </div>
+        }
       />
 
       <Suspense fallback={<OrdersSkeleton />}>

@@ -2,7 +2,7 @@
 
 import Image, { ImageProps } from 'next/image';
 import { useState, forwardRef, useCallback, useMemo } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 // Extended props for our optimized image component
 interface OptimizedImageProps extends Omit<ImageProps, 'src' | 'alt'> {

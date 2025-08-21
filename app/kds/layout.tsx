@@ -76,14 +76,7 @@ export default function KdsLayout({
           {/* Keyboard navigation hints (hidden by default, shown on focus) */}
           <div
             id="keyboard-hints"
-            className="
-              fixed top-4 right-4 z-50 
-              bg-gray-900 text-white text-sm 
-              p-3 rounded-lg border border-gray-600
-              opacity-0 pointer-events-none
-              transition-opacity duration-300
-              focus-within:opacity-100
-            "
+            className="fixed top-4 right-4 z-50 bg-gray-900 text-white text-sm p-3 rounded-lg border border-gray-600 opacity-0 pointer-events-none transition-opacity duration-300 focus-within:opacity-100"
             tabIndex={-1}
           >
             <div className="font-semibold mb-2">Keyboard Shortcuts:</div>
@@ -103,14 +96,7 @@ export default function KdsLayout({
           <div className="fixed top-4 left-4 z-50 flex gap-2">
             <button
               id="fullscreen-toggle"
-              className="
-                bg-gray-800 hover:bg-gray-700
-                text-white text-xs
-                p-2 rounded
-                border border-gray-600
-                transition-colors
-                focus:outline-none focus:ring-2 focus:ring-blue-500
-              "
+              className="bg-gray-800 hover:bg-gray-700 text-white text-xs p-2 rounded border border-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
               title="Toggle Fullscreen (F11)"
             >
               ⛶
@@ -118,12 +104,7 @@ export default function KdsLayout({
             
             <div
               id="connection-status"
-              className="
-                flex items-center gap-2
-                bg-gray-800 text-xs
-                px-3 py-2 rounded
-                border border-gray-600
-              "
+              className="flex items-center gap-2 bg-gray-800 text-xs px-3 py-2 rounded border border-gray-600"
             >
               <div id="status-indicator" className="w-2 h-2 bg-green-500 rounded-full"></div>
               <span id="status-text">Connected</span>

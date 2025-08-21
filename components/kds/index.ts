@@ -17,7 +17,6 @@ export {
   Ticket as KdsTicket,
   Timer as KdsTimer,
   StationView as KdsStationView,
-  KdsHeader,
   AllDayViewComponent as KdsAllDayView
 }
 

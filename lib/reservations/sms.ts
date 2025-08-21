@@ -30,12 +30,10 @@ const SMS_TEMPLATES = {
 interface SMSConfig {
   restaurantName: string;
   fromNumber: string;
-  provider: 'twilio' | 'aws' | 'mock';
+  provider: 'twilio' | 'mock';
   credentials?: {
     accountSid?: string;
     authToken?: string;
-    accessKey?: string;
-    secretKey?: string;
   };
   enableDeliveryReceipts: boolean;
   enableOptOut: boolean;

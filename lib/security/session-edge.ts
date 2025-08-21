@@ -5,7 +5,7 @@
 
 import { getIronSession, IronSession, SessionOptions } from 'iron-session';
 import { NextRequest, NextResponse } from 'next/server';
-import { SECURITY_CONFIG, SECURITY_EVENTS } from '../../security.config';
+import { SECURITY_CONFIG, SECURITY_EVENTS } from '../../config/security.config';
 
 // Session Data Interface
 export interface SessionData {

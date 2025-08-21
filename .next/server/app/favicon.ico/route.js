@@ -1,0 +1,10 @@
+var R=require("../../chunks/[turbopack]_runtime.js")("server/app/favicon.ico/route.js")
+R.c("server/chunks/node_modules_next_dist_3bd4d890._.js")
+R.c("server/chunks/node_modules_next_dist_compiled_bc6b8ddf._.js")
+R.c("server/chunks/[root-of-the-server]__59fb0327._.js")
+R.c("server/chunks/node_modules_next_dist_2755e5f0._.js")
+R.c("server/chunks/node_modules_next_be5324d0._.js")
+R.c("server/chunks/node_modules_next_dist_esm_server_lib_patch-fetch_a55d7fe2.js")
+R.m(15934)
+R.m(90295)
+module.exports=R.m(90295).exports

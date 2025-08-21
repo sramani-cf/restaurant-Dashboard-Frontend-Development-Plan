@@ -7,7 +7,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const nextConfig: NextConfig = {
   // Performance Optimizations
   experimental: {
-    optimizeCss: true,
+    optimizeCss: false,
     optimizePackageImports: [
       'lucide-react',
       '@tanstack/react-table',
@@ -16,17 +16,18 @@ const nextConfig: NextConfig = {
       '@headlessui/react',
       '@radix-ui/react-slot'
     ],
-    turbo: {
-      resolveExtensions: [
-        '.mdx',
-        '.tsx',
-        '.ts',
-        '.jsx',
-        '.js',
-        '.mjs',
-        '.json',
-      ],
-    },
+  },
+  
+  turbopack: {
+    resolveExtensions: [
+      '.mdx',
+      '.tsx',
+      '.ts',
+      '.jsx',
+      '.js',
+      '.mjs',
+      '.json',
+    ],
   },
 
   // Image Optimization
@@ -38,10 +39,6 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '*.amazonaws.com',
-      },
       {
         protocol: 'https',
         hostname: '*.cloudinary.com',
@@ -94,8 +91,8 @@ const nextConfig: NextConfig = {
           {
             key: 'Content-Security-Policy',
             value: isDevelopment 
-              ? "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' ws://localhost:* wss://localhost:* https://va.vercel-scripts.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"
-              : "default-src 'self'; script-src 'self' https://va.vercel-scripts.com https://vercel.live; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://va.vercel-scripts.com https://vercel.live; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;"
+              ? "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' ws://localhost:* wss://localhost:*; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"
+              : "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;"
           },
           // Cross-Origin policies
           {
@@ -208,7 +205,7 @@ const nextConfig: NextConfig = {
       },
       // Static assets with long-term caching and security
       {
-        source: '/(.*\\.(js|css|woff|woff2|ttf|otf|eot))',
+        source: '/:path*\.(js|css|woff|woff2|ttf|otf|eot)',
         headers: [
           {
             key: 'Cache-Control',
@@ -222,7 +219,7 @@ const nextConfig: NextConfig = {
       },
       // Images with security headers
       {
-        source: '/(.*\\.(ico|png|jpg|jpeg|gif|webp|avif|svg))',
+        source: '/:path*\.(ico|png|jpg|jpeg|gif|webp|avif|svg)',
         headers: [
           {
             key: 'Cache-Control',
@@ -303,7 +300,6 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   
   // Power user settings for better performance
-  swcMinify: true,
   modularizeImports: {
     'lucide-react': {
       transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',

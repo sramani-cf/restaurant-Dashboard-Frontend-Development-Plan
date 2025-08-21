@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dropdown } from '@/components/ui/dropdown';
 import { formatCurrency, formatQuantity } from '@/lib/inventory/calculations';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import type { InventoryItem } from '@/lib/inventory/types';
 
 interface InventoryItemCardProps {

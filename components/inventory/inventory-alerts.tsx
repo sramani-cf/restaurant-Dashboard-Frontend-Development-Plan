@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { X, AlertTriangle, Clock, Package, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { getInventoryAlerts } from '@/lib/inventory/data';
 import type { InventoryAlert } from '@/lib/inventory/types';
 

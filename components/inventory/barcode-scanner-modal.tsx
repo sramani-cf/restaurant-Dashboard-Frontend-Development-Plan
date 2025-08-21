@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { BarcodeScanner, BarcodeUtils } from '@/lib/inventory/barcode';
 import { lookupItemByBarcode } from '@/lib/inventory/data';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import type { InventoryItem, ScanResult } from '@/lib/inventory/types';
 
 interface BarcodeScannerModalProps {

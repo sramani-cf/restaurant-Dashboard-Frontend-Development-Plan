@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Scan, Package, Plus, Move, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BarcodeScannerModal } from './barcode-scanner-modal';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 
 interface MobileBarcodeFABProps {
   className?: string;
