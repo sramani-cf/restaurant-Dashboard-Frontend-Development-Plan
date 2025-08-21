@@ -1,5 +1,110 @@
 @import "tailwindcss";
 
+/* CSS Custom Properties for Design System */
+:root {
+  /* Primary Brand Colors */
+  --primary: 20 83% 56%; /* Orange-ish */
+  --primary-foreground: 210 40% 98%;
+  
+  /* Semantic Colors */
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 20 83% 56%;
+  
+  /* Semantic State Colors */
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --success: 142 71% 45%;
+  --success-foreground: 210 40% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 240 10% 3.9%;
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 210 40% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 210 40% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 210 40% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 20 83% 56%;
+  --primary: 20 83% 56%;
+  --primary-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --success: 142 71% 45%;
+  --success-foreground: 210 40% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 240 10% 3.9%;
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: 1px solid hsl(var(--primary));
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: hsl(var(--primary) / 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.4);
+}
+
+.btn-secondary {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+  border: 1px solid hsl(var(--border));
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-secondary:hover {
+  background-color: hsl(var(--muted-foreground) / 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px hsl(var(--muted-foreground) / 0.2);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: hsl(var(--primary));
+  border: 1px solid hsl(var(--primary));
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline:hover {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.4);
+}
+
+/* Card Styles */
+.card {
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 4px 25px hsl(var(--muted-foreground) / 0.15);
+  transform: translateY(-2px);
+}
+
 /* Critical CSS for initial render */
 .loading-screen {
   position: fixed;
@@ -896,4 +1001,19 @@ body {
   .print-break {
     page-break-before: always;
   }
+}
+
+/* Fix for hydration issues with Link components */
+a[data-hydration-fix] {
+  cursor: pointer !important;
+}
+
+/* Ensure all Next.js Link components have consistent cursor behavior */
+a[href] {
+  cursor: pointer;
+}
+
+/* Suppress hydration warnings for navigation components */
+nav a {
+  cursor: pointer;
 }

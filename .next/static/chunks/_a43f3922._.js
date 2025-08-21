@@ -113,6 +113,10 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 __turbopack_context__.s([
     "Alert",
     ()=>Alert,
+    "AlertDescription",
+    ()=>AlertDescription,
+    "AlertTitle",
+    ()=>AlertTitle,
     "ErrorAlert",
     ()=>ErrorAlert,
     "InfoAlert",
@@ -275,57 +279,89 @@ const Alert = /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node
 }, "C45KFF5iQHXNkju7O/pllv86QL4="));
 _c = Alert;
 Alert.displayName = 'Alert';
+const AlertTitle = /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"](_c1 = (param, ref)=>{
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h5", {
+        ref: ref,
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("mb-1 font-medium leading-none tracking-tight", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert.tsx",
+        lineNumber: 112,
+        columnNumber: 3
+    }, ("TURBOPACK compile-time value", void 0));
+});
+_c2 = AlertTitle;
+AlertTitle.displayName = "AlertTitle";
+const AlertDescription = /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["forwardRef"](_c3 = (param, ref)=>{
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        ref: ref,
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("text-sm [&_p]:leading-relaxed", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert.tsx",
+        lineNumber: 124,
+        columnNumber: 3
+    }, ("TURBOPACK compile-time value", void 0));
+});
+_c4 = AlertDescription;
+AlertDescription.displayName = "AlertDescription";
 function SuccessAlert(props) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Alert, {
         variant: "success",
         ...props
     }, void 0, false, {
         fileName: "[project]/components/ui/alert.tsx",
-        lineNumber: 110,
+        lineNumber: 134,
         columnNumber: 10
     }, this);
 }
-_c1 = SuccessAlert;
+_c5 = SuccessAlert;
 function WarningAlert(props) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Alert, {
         variant: "warning",
         ...props
     }, void 0, false, {
         fileName: "[project]/components/ui/alert.tsx",
-        lineNumber: 114,
+        lineNumber: 138,
         columnNumber: 10
     }, this);
 }
-_c2 = WarningAlert;
+_c6 = WarningAlert;
 function ErrorAlert(props) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Alert, {
         variant: "error",
         ...props
     }, void 0, false, {
         fileName: "[project]/components/ui/alert.tsx",
-        lineNumber: 118,
+        lineNumber: 142,
         columnNumber: 10
     }, this);
 }
-_c3 = ErrorAlert;
+_c7 = ErrorAlert;
 function InfoAlert(props) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Alert, {
         variant: "info",
         ...props
     }, void 0, false, {
         fileName: "[project]/components/ui/alert.tsx",
-        lineNumber: 122,
+        lineNumber: 146,
         columnNumber: 10
     }, this);
 }
-_c4 = InfoAlert;
+_c8 = InfoAlert;
 ;
-var _c, _c1, _c2, _c3, _c4;
+var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7, _c8;
 __turbopack_context__.k.register(_c, "Alert");
-__turbopack_context__.k.register(_c1, "SuccessAlert");
-__turbopack_context__.k.register(_c2, "WarningAlert");
-__turbopack_context__.k.register(_c3, "ErrorAlert");
-__turbopack_context__.k.register(_c4, "InfoAlert");
+__turbopack_context__.k.register(_c1, "AlertTitle$React.forwardRef");
+__turbopack_context__.k.register(_c2, "AlertTitle");
+__turbopack_context__.k.register(_c3, "AlertDescription$React.forwardRef");
+__turbopack_context__.k.register(_c4, "AlertDescription");
+__turbopack_context__.k.register(_c5, "SuccessAlert");
+__turbopack_context__.k.register(_c6, "WarningAlert");
+__turbopack_context__.k.register(_c7, "ErrorAlert");
+__turbopack_context__.k.register(_c8, "InfoAlert");
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }

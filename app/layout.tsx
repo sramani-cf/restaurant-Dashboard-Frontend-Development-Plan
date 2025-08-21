@@ -142,8 +142,8 @@ export default function RootLayout({
         {/* Accessibility Providers - Must wrap entire application */}
         <AnnouncerProvider debugMode={process.env.NODE_ENV === 'development'}>
           <KeyboardShortcutsProvider>
-            {/* Skip Links - Must be first interactive element for keyboard users */}
-            <SkipLinks />
+              {/* Skip Links - Must be first interactive element for keyboard users */}
+              <SkipLinks />
 
             {/* Performance monitoring initialization */}
             <Script

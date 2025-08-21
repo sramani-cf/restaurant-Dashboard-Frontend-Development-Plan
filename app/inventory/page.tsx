@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 
+import { AppShell } from '@/components/layout';
 import { InventoryDashboard } from '@/components/inventory/inventory-dashboard';
 import { InventoryMetricsCards } from '@/components/inventory/inventory-metrics-cards';
 import { InventoryFilters } from '@/components/inventory/inventory-filters';
@@ -63,23 +64,17 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
   const currentView = (searchParams.view || 'table') as 'grid' | 'table' | 'cards';
 
   return (
-    <div className="space-y-6 pb-20 lg:pb-6">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Inventory Overview</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Track stock levels, manage items, and monitor warehouse operations
-          </p>
-        </div>
-        
-        {/* Quick Actions - Desktop */}
-        <div className="mt-4 sm:mt-0 hidden sm:block">
-          <Suspense fallback={<div className="h-10 w-32 bg-gray-200 rounded animate-pulse" />}>
-            <QuickActions />
-          </Suspense>
-        </div>
-      </div>
+    <AppShell
+      title="Inventory Overview"
+      description="Track stock levels, manage items, and monitor warehouse operations"
+      breadcrumbs={[{ label: 'Inventory' }]}
+      actions={
+        <Suspense fallback={<div className="h-10 w-32 bg-gray-200 rounded animate-pulse" />}>
+          <QuickActions />
+        </Suspense>
+      }
+    >
+      <div className="space-y-6 pb-20 lg:pb-6">
 
       {/* Metrics Cards */}
       <Suspense fallback={
@@ -277,6 +272,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
           `,
         }}
       />
-    </div>
+      </div>
+    </AppShell>
   );
 }

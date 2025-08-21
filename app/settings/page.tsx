@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
-import { Tabs } from '../../components/ui/tabs';
+import { AppShell } from '@/components/layout';
+import { SimpleTabs } from '../../components/ui/tabs';
 import { RestaurantProfileTab } from '../../components/settings/restaurant-profile-tab';
 import { UsersRolesTab } from '../../components/settings/users-roles-tab';
 import { PermissionsTab } from '../../components/settings/permissions-tab';
@@ -29,13 +30,13 @@ function TabLoading() {
 export default async function SettingsPage({
   searchParams
 }: {
-  searchParams: { tab?: string }
+  searchParams: Promise<{ tab?: string }>
 }) {
-  const activeTab = searchParams.tab || 'restaurant';
+  const params = await searchParams;
+  const activeTab = params.tab || 'restaurant';
 
   const tabs = [
     {
-      id: 'restaurant',
       label: 'Restaurant Profile',
       content: (
         <Suspense fallback={<TabLoading />}>
@@ -44,7 +45,6 @@ export default async function SettingsPage({
       )
     },
     {
-      id: 'users',
       label: 'Users & Roles',
       content: (
         <Suspense fallback={<TabLoading />}>
@@ -53,7 +53,6 @@ export default async function SettingsPage({
       )
     },
     {
-      id: 'permissions',
       label: 'Permissions',
       content: (
         <Suspense fallback={<TabLoading />}>
@@ -62,7 +61,6 @@ export default async function SettingsPage({
       )
     },
     {
-      id: 'devices',
       label: 'Devices',
       content: (
         <Suspense fallback={<TabLoading />}>
@@ -71,7 +69,6 @@ export default async function SettingsPage({
       )
     },
     {
-      id: 'payments',
       label: 'Payments',
       content: (
         <Suspense fallback={<TabLoading />}>
@@ -80,7 +77,6 @@ export default async function SettingsPage({
       )
     },
     {
-      id: 'integrations',
       label: 'Integrations',
       content: (
         <Suspense fallback={<TabLoading />}>
@@ -89,7 +85,6 @@ export default async function SettingsPage({
       )
     },
     {
-      id: 'taxes',
       label: 'Tax & Gratuity',
       content: (
         <Suspense fallback={<TabLoading />}>
@@ -98,7 +93,6 @@ export default async function SettingsPage({
       )
     },
     {
-      id: 'security',
       label: 'Security',
       content: (
         <Suspense fallback={<TabLoading />}>
@@ -109,13 +103,17 @@ export default async function SettingsPage({
   ];
 
   return (
-    <div className="h-full">
-      <Tabs
-        tabs={tabs}
-        defaultValue={activeTab}
-        className="h-full"
-        urlParam="tab"
-      />
-    </div>
+    <AppShell
+      title="Settings"
+      description="Configure your restaurant management system"
+      breadcrumbs={[{ label: 'Settings' }]}
+    >
+      <div className="h-full">
+        <SimpleTabs
+          tabs={tabs}
+          className="h-full"
+        />
+      </div>
+    </AppShell>
   );
 }

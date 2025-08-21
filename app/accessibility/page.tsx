@@ -8,6 +8,7 @@
 'use client';
 
 import React from 'react';
+import { AppShell } from '@/components/layout';
 import { cn } from '@/utils';
 import {
   useAccessibilityPreferences,
@@ -472,20 +473,20 @@ const AccessibilitySettingsContent: React.FC = () => {
           <div className="text-sm space-y-2">
             <p className="flex justify-between">
               <span>Prefers Reduced Motion:</span>
-              <span className={mediaPreferences.prefersReducedMotion ? 'text-green-600' : 'text-muted-foreground'}>
-                {mediaPreferences.prefersReducedMotion ? 'Yes' : 'No'}
+              <span className={mediaPreferences.prefersReducedMotion === true ? 'text-green-600' : 'text-muted-foreground'}>
+                {mediaPreferences.prefersReducedMotion === true ? 'Yes' : mediaPreferences.prefersReducedMotion === false ? 'No' : 'Detecting...'}
               </span>
             </p>
             <p className="flex justify-between">
               <span>Prefers High Contrast:</span>
-              <span className={mediaPreferences.prefersHighContrast ? 'text-green-600' : 'text-muted-foreground'}>
-                {mediaPreferences.prefersHighContrast ? 'Yes' : 'No'}
+              <span className={mediaPreferences.prefersHighContrast === true ? 'text-green-600' : 'text-muted-foreground'}>
+                {mediaPreferences.prefersHighContrast === true ? 'Yes' : mediaPreferences.prefersHighContrast === false ? 'No' : 'Detecting...'}
               </span>
             </p>
             <p className="flex justify-between">
               <span>Prefers Dark Mode:</span>
-              <span className={mediaPreferences.prefersDarkMode ? 'text-green-600' : 'text-muted-foreground'}>
-                {mediaPreferences.prefersDarkMode ? 'Yes' : 'No'}
+              <span className={mediaPreferences.prefersDarkMode === true ? 'text-green-600' : 'text-muted-foreground'}>
+                {mediaPreferences.prefersDarkMode === true ? 'Yes' : mediaPreferences.prefersDarkMode === false ? 'No' : 'Detecting...'}
               </span>
             </p>
           </div>
@@ -545,45 +546,31 @@ const AccessibilitySettingsContent: React.FC = () => {
  */
 export default function AccessibilityPage() {
   return (
-    <AnnouncerProvider debugMode={false}>
-      <KeyboardShortcutsProvider>
-        <div className="min-h-screen bg-background">
-          {/* Skip Links */}
-          <SkipLinks />
-
-          <div className="container mx-auto px-4 py-8">
-            {/* Page Header */}
-            <header className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-2">
-                Accessibility Settings
-              </h1>
-              <p className="text-lg text-muted-foreground">
-                Configure accessibility preferences and test WCAG compliance
+    <AppShell
+      title="Accessibility Settings"
+      description="Configure accessibility preferences and test WCAG compliance"
+      breadcrumbs={[{ label: 'Accessibility' }]}
+    >
+      <AnnouncerProvider debugMode={false}>
+        <KeyboardShortcutsProvider>
+          <AccessibilitySettingsContent />
+          
+          {/* Footer */}
+          <footer className="mt-12 pt-8 border-t">
+            <div className="text-center text-sm text-muted-foreground">
+              <p>
+                For additional accessibility support, please contact{' '}
+                <a
+                  href="mailto:accessibility@restaurant-dashboard.com"
+                  className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-ring rounded"
+                >
+                  accessibility@restaurant-dashboard.com
+                </a>
               </p>
-            </header>
-
-            {/* Main Content */}
-            <main id="main-content" tabIndex={-1}>
-              <AccessibilitySettingsContent />
-            </main>
-
-            {/* Footer */}
-            <footer className="mt-12 pt-8 border-t">
-              <div className="text-center text-sm text-muted-foreground">
-                <p>
-                  For additional accessibility support, please contact{' '}
-                  <a
-                    href="mailto:accessibility@restaurant-dashboard.com"
-                    className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-ring rounded"
-                  >
-                    accessibility@restaurant-dashboard.com
-                  </a>
-                </p>
-              </div>
-            </footer>
-          </div>
-        </div>
-      </KeyboardShortcutsProvider>
-    </AnnouncerProvider>
+            </div>
+          </footer>
+        </KeyboardShortcutsProvider>
+      </AnnouncerProvider>
+    </AppShell>
   );
 }

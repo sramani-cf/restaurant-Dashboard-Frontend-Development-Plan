@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { AppShell } from '@/components/layout';
 import { 
   Reservation, 
   Guest, 
@@ -34,7 +35,6 @@ import {
   GuestProfile
 } from '@/components/reservations';
 import { updateTableStatusAction } from './actions';
-import { PageHeader } from '@/components/ui/page-header';
 
 export default function ReservationsPage() {
   // State management
@@ -215,15 +215,20 @@ export default function ReservationsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <ReservationHeader 
-        onReservationCreated={handleReservationUpdate}
-      />
+    <AppShell
+      title="Reservations"
+      description="Manage table reservations, floor plans, and dining areas"
+      breadcrumbs={[{ label: 'Reservations' }]}
+    >
+      <div className="space-y-6">
+        <ReservationHeader 
+          onReservationCreated={handleReservationUpdate}
+        />
 
-      <ReservationNavigation 
-        activeTab={activeTab}
-        onTabChange={handleTabChange}
-      />
+        <ReservationNavigation 
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+        />
 
       {activeTab === 'dashboard' && stats && (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -361,6 +366,7 @@ export default function ReservationsPage() {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </AppShell>
   );
 }

@@ -168,7 +168,7 @@ export const deviceSchema = z.object({
   name: z.string().min(1, 'Device name is required'),
   type: z.enum(['pos_terminal', 'kds_screen', 'printer', 'tablet', 'scanner', 'scale', 'cash_drawer']),
   locationId: z.string().min(1, 'Location is required'),
-  ipAddress: z.string().ip('Invalid IP address').optional(),
+  ipAddress: z.string().regex(/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/, 'Invalid IP address').optional(),
   macAddress: z.string().regex(/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/, 'Invalid MAC address').optional(),
   serialNumber: z.string().optional(),
   model: z.string().optional(),
@@ -383,7 +383,7 @@ export const securitySettingsSchema = z.object({
     backupCodes: z.number().min(0).max(50),
     gracePeriod: z.number().min(0).max(30)
   }),
-  ipWhitelist: z.array(z.string().ip()),
+  ipWhitelist: z.array(z.string().regex(/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/, 'Invalid IP address')),
   dataEncryption: z.object({
     encryptAtRest: z.boolean(),
     encryptInTransit: z.boolean(),

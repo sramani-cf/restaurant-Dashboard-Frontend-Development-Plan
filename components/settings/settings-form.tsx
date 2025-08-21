@@ -2,7 +2,7 @@
 
 import { ReactNode, FormEvent, useState } from 'react';
 import { Button } from '../ui/button';
-import { cn } from '../../lib/utils';
+import { cn } from '../ui/utils';
 
 interface SettingsFormProps {
   children: ReactNode;

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { OrdersContent } from './orders-content';
 import { OrdersSkeleton } from './orders-skeleton';
-import { PageHeader } from '@/components/ui/page-header';
+import { AppShell } from '@/components/layout';
 import { Button } from '@/components/ui/button';
 
 export default async function OrdersPage({
@@ -17,25 +17,24 @@ export default async function OrdersPage({
   }
 }) {
   return (
-    <div className="container mx-auto px-4 py-6 max-w-7xl">
-      <PageHeader
-        title="Order Management"
-        description="View and manage all restaurant orders"
-        actions={
-          <div className="flex space-x-2">
-            <Link href="/orders/new">
-              <Button variant="primary">New Order</Button>
-            </Link>
-            <Link href="/orders/export">
-              <Button variant="secondary">Export</Button>
-            </Link>
-          </div>
-        }
-      />
-
+    <AppShell
+      title="Order Management"
+      description="View and manage all restaurant orders"
+      breadcrumbs={[{ label: 'Orders' }]}
+      actions={
+        <>
+          <Link href="/orders/new">
+            <Button variant="primary">New Order</Button>
+          </Link>
+          <Link href="/orders/export">
+            <Button variant="secondary">Export</Button>
+          </Link>
+        </>
+      }
+    >
       <Suspense fallback={<OrdersSkeleton />}>
         <OrdersContent searchParams={searchParams} />
       </Suspense>
-    </div>
+    </AppShell>
   );
 }

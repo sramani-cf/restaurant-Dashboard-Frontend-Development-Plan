@@ -1,7 +1,9 @@
 import { Suspense } from 'react';
+import { AppShell } from '@/components/layout';
 import { OrderAnalyticsDashboard } from './order-analytics-dashboard';
 import { OrderAnalyticsSkeleton } from './order-analytics-skeleton';
-import { PageHeader } from '@/components/ui/page-header';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default async function OrderAnalyticsPage({
   searchParams
@@ -12,28 +14,23 @@ export default async function OrderAnalyticsPage({
   }
 }) {
   return (
-    <div className="container mx-auto px-4 py-6 max-w-7xl">
-      <PageHeader
-        title="Order Analytics"
-        description="Comprehensive insights into order patterns and performance"
-        backHref="/orders"
-        actions={[
-          {
-            label: 'Export Report',
-            onClick: () => {},
-            variant: 'outline'
-          },
-          {
-            label: 'Schedule Report',
-            onClick: () => {},
-            variant: 'secondary'
-          }
-        ]}
-      />
-
+    <AppShell
+      title="Order Analytics"
+      description="Comprehensive insights into order patterns and performance"
+      breadcrumbs={[
+        { label: 'Orders', href: '/orders' },
+        { label: 'Analytics' }
+      ]}
+      actions={
+        <>
+          <Button variant="secondary">Export Report</Button>
+          <Button variant="secondary">Schedule Report</Button>
+        </>
+      }
+    >
       <Suspense fallback={<OrderAnalyticsSkeleton />}>
         <OrderAnalyticsDashboard searchParams={searchParams} />
       </Suspense>
-    </div>
+    </AppShell>
   );
 }

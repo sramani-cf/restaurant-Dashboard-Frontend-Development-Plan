@@ -37,6 +37,8 @@ __turbopack_context__.s([
     ()=>getCookie,
     "getInitials",
     ()=>getInitials,
+    "getLoginBypassEnabled",
+    ()=>getLoginBypassEnabled,
     "getTimeAgo",
     ()=>getTimeAgo,
     "groupBy",
@@ -74,6 +76,7 @@ __turbopack_context__.s([
     "truncate",
     ()=>truncate
 ]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/clsx/dist/clsx.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$tailwind$2d$merge$2f$dist$2f$bundle$2d$mjs$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/tailwind-merge/dist/bundle-mjs.mjs [app-client] (ecmascript)");
 ;
@@ -352,6 +355,9 @@ const storage = {
         localStorage.clear();
     }
 };
+function getLoginBypassEnabled() {
+    return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env.NEXT_PUBLIC_LOGIN_BUTTON_BYPASS_AUTH === 'on' || __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env.LOGIN_BUTTON_BYPASS_AUTH === 'on';
+}
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }
@@ -3201,6 +3207,10 @@ const SkipLink = (param)=>{
         title: title,
         onClick: handleClick,
         suppressHydrationWarning: true,
+        contentEditable: false,
+        style: {
+            cursor: 'pointer'
+        },
         className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$utils$2f$index$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])(// Base styles - hidden by default
         'absolute left-4 top-4 z-50', 'px-4 py-2', 'bg-primary text-primary-foreground', 'border border-primary-foreground/20', 'rounded-md shadow-lg', 'font-medium text-sm', 'transition-all duration-200', 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', // Screen reader only by default
         'sr-only', // Show on focus
@@ -3229,14 +3239,14 @@ const SkipLinks = (param)=>{
                     children: link.text
                 }, link.href, false, {
                     fileName: "[project]/components/accessibility/skip-link.tsx",
-                    lineNumber: 159,
+                    lineNumber: 161,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))),
             children
         ]
     }, void 0, true, {
         fileName: "[project]/components/accessibility/skip-link.tsx",
-        lineNumber: 151,
+        lineNumber: 153,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -3250,7 +3260,7 @@ const SkipToMain = (param)=>{
         children: text
     }, void 0, false, {
         fileName: "[project]/components/accessibility/skip-link.tsx",
-        lineNumber: 189,
+        lineNumber: 191,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -3273,12 +3283,12 @@ const SkipNavigation = (param)=>{
                 ]
             }, section.id, true, {
                 fileName: "[project]/components/accessibility/skip-link.tsx",
-                lineNumber: 223,
+                lineNumber: 225,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)))
     }, void 0, false, {
         fileName: "[project]/components/accessibility/skip-link.tsx",
-        lineNumber: 217,
+        lineNumber: 219,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -3343,12 +3353,12 @@ const TableOfContentsSkipLinks = (param)=>{
                 children: heading.text
             }, heading.id, false, {
                 fileName: "[project]/components/accessibility/skip-link.tsx",
-                lineNumber: 311,
+                lineNumber: 313,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)))
     }, void 0, false, {
         fileName: "[project]/components/accessibility/skip-link.tsx",
-        lineNumber: 305,
+        lineNumber: 307,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -3414,12 +3424,12 @@ const DataTableSkipLinks = (param)=>{
                 ]
             }, section.id, true, {
                 fileName: "[project]/components/accessibility/skip-link.tsx",
-                lineNumber: 388,
+                lineNumber: 390,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)))
     }, void 0, false, {
         fileName: "[project]/components/accessibility/skip-link.tsx",
-        lineNumber: 382,
+        lineNumber: 384,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -3484,12 +3494,12 @@ const FormSkipLinks = (param)=>{
                 children: section.label
             }, section.id, false, {
                 fileName: "[project]/components/accessibility/skip-link.tsx",
-                lineNumber: 463,
+                lineNumber: 465,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)))
     }, void 0, false, {
         fileName: "[project]/components/accessibility/skip-link.tsx",
-        lineNumber: 457,
+        lineNumber: 459,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };

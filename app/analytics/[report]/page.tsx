@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
+import { AppShell } from '@/components/layout';
 import { ReportHeader } from '@/components/analytics/report-header';
 import { LoadingState, ReportSkeleton } from '@/components/analytics/loading-state';
 import { ErrorState } from '@/components/analytics/error-state';
@@ -188,18 +189,23 @@ export default function ReportPage({ params, searchParams }: ReportPageProps) {
     notFound();
   }
 
+  const config = reportConfig[reportType];
+
   return (
-    <Suspense 
-      fallback={
-        <div className="min-h-screen bg-gray-50">
-          <ReportSkeleton />
-        </div>
-      }
+    <AppShell
+      title={config.title}
+      description={config.description}
+      breadcrumbs={[
+        { label: 'Analytics', href: '/analytics' },
+        { label: config.title }
+      ]}
     >
-      <ReportContent 
-        reportType={reportType} 
-        searchParams={searchParams} 
-      />
-    </Suspense>
+      <Suspense fallback={<ReportSkeleton />}>
+        <ReportContent 
+          reportType={reportType} 
+          searchParams={searchParams} 
+        />
+      </Suspense>
+    </AppShell>
   );
 }

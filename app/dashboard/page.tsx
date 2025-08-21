@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { getDashboardData, revalidateLiveData } from '@/lib/dashboard/data';
 import { DashboardContent } from './dashboard-content';
 import { DashboardSkeleton } from './dashboard-skeleton';
+import { AppShell } from '@/components/layout';
 
 // This is a server component that fetches initial data
 export default async function DashboardPage({
@@ -19,8 +20,11 @@ export default async function DashboardPage({
   const dashboardData = await getDashboardData(dateRange);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-[1600px] mx-auto p-6 space-y-6">
+    <AppShell 
+      title="Dashboard"
+      description="Restaurant performance overview and key metrics"
+    >
+      <div className="max-w-[1600px] mx-auto space-y-6">
         <Suspense fallback={<DashboardSkeleton />}>
           <DashboardContent 
             initialData={dashboardData}
@@ -28,7 +32,7 @@ export default async function DashboardPage({
           />
         </Suspense>
       </div>
-    </div>
+    </AppShell>
   );
 }
 

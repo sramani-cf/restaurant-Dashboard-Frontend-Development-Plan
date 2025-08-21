@@ -105,6 +105,8 @@ export const SkipLink: React.FC<SkipLinkProps> = ({
       title={title}
       onClick={handleClick}
       suppressHydrationWarning
+      contentEditable={false}
+      style={{ cursor: 'pointer' }}
       className={cn(
         // Base styles - hidden by default
         'absolute left-4 top-4 z-50',

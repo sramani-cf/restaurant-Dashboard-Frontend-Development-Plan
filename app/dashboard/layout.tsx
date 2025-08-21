@@ -74,7 +74,7 @@ function Sidebar() {
       <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white border-r border-gray-200 px-6 pb-4">
         {/* Logo */}
         <div className="flex h-16 shrink-0 items-center">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2" suppressHydrationWarning>
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
               <ChefHat className="h-5 w-5" />
             </div>
@@ -98,6 +98,7 @@ function Sidebar() {
                           : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
                         }
                       `}
+                      suppressHydrationWarning
                     >
                       <item.icon
                         className={`h-5 w-5 shrink-0 ${
@@ -160,6 +161,7 @@ function Sidebar() {
                     <Link
                       href={item.href}
                       className="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                      suppressHydrationWarning
                     >
                       <item.icon
                         className="h-5 w-5 shrink-0 text-gray-400 group-hover:text-blue-600"
@@ -189,7 +191,7 @@ function MobileNav() {
       <div className="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true" />
 
       <div className="flex flex-1 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2" suppressHydrationWarning>
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-600 text-white">
             <ChefHat className="h-4 w-4" />
           </div>

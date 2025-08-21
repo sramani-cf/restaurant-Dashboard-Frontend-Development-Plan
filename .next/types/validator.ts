@@ -65,12 +65,6 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   handler satisfies AppPageConfig<"/analytics">
 }
 
-// Validate ..\..\app\auth\error\page.tsx
-{
-  const handler = {} as typeof import("..\\..\\app\\auth\\error\\page.js")
-  handler satisfies AppPageConfig<"/auth/error">
-}
-
 // Validate ..\..\app\auth\login\page.tsx
 {
   const handler = {} as typeof import("..\\..\\app\\auth\\login\\page.js")
@@ -99,12 +93,6 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 {
   const handler = {} as typeof import("..\\..\\app\\kds\\page.js")
   handler satisfies AppPageConfig<"/kds">
-}
-
-// Validate ..\..\app\login\page.tsx
-{
-  const handler = {} as typeof import("..\\..\\app\\login\\page.js")
-  handler satisfies AppPageConfig<"/login">
 }
 
 // Validate ..\..\app\menu\page.tsx
@@ -171,12 +159,6 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 {
   const handler = {} as typeof import("..\\..\\app\\api\\analytics\\performance\\route.js")
   handler satisfies RouteHandlerConfig<"/api/analytics/performance">
-}
-
-// Validate ..\..\app\api\auth\[...nextauth]\route.ts
-{
-  const handler = {} as typeof import("..\\..\\app\\api\\auth\\[...nextauth]\\route.js")
-  handler satisfies RouteHandlerConfig<"/api/auth/[...nextauth]">
 }
 
 // Validate ..\..\app\api\health\route.ts

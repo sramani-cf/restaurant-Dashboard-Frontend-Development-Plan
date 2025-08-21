@@ -1,0 +1,20 @@
+# Restaurant Dashboard - robots.txt
+User-agent: *
+Disallow: /auth/
+Disallow: /api/
+Disallow: /dashboard
+Disallow: /orders
+Disallow: /menu
+Disallow: /inventory
+Disallow: /staff
+Disallow: /analytics
+Disallow: /reservations
+Disallow: /pos
+Disallow: /settings
+Disallow: /kds
+Disallow: /accessibility
+
+Allow: /
+Allow: /docs
+
+Sitemap: https://localhost:3000/sitemap.xml

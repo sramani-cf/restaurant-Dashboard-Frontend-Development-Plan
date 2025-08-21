@@ -84,7 +84,7 @@ export default function Home() {
         <div className="mt-12 text-center">
           <div className="inline-flex gap-4">
             <Link 
-              href="/login" 
+              href="/auth/login" 
               className="btn-primary px-6 py-3 rounded-lg font-medium"
             >
               Sign In

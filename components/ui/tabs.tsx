@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import { cn } from './utils';
@@ -36,13 +38,18 @@ function Tabs({
   tabPanelClassName,
   orientation = 'horizontal',
 }: TabsProps) {
+  // Early return if no items
+  if (!items || items.length === 0) {
+    return <div className="text-muted-foreground text-sm">No tabs available</div>;
+  }
+
   const [internalSelectedIndex, setInternalSelectedIndex] = React.useState(() => {
-    const initialTab = selectedTab || defaultTab || items[0]?.key;
-    return items.findIndex(item => item.key === initialTab) || 0;
+    const initialTab = selectedTab || defaultTab || items?.[0]?.key;
+    return items?.findIndex(item => item.key === initialTab) || 0;
   });
 
   const selectedIndex = React.useMemo(() => {
-    if (selectedTab) {
+    if (selectedTab && items) {
       const index = items.findIndex(item => item.key === selectedTab);
       return index >= 0 ? index : 0;
     }
@@ -50,7 +57,7 @@ function Tabs({
   }, [selectedTab, items, internalSelectedIndex]);
 
   const handleChange = (index: number) => {
-    const selectedItem = items[index];
+    const selectedItem = items?.[index];
     if (selectedItem && !selectedItem.disabled) {
       setInternalSelectedIndex(index);
       onTabChange?.(selectedItem.key);
@@ -137,7 +144,7 @@ function Tabs({
         vertical={orientation === 'vertical'}
       >
         <TabList className={cn(getTabListClasses(), tabListClassName)}>
-          {items.map((item, _index) => (
+          {items?.map((item, _index) => (
             <Tab
               key={item.key}
               disabled={item.disabled}
@@ -161,7 +168,7 @@ function Tabs({
         </TabList>
 
         <TabPanels className={cn('mt-4', tabPanelClassName)}>
-          {items.map((item) => (
+          {items?.map((item) => (
             <TabPanel
               key={item.key}
               className="focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-md"

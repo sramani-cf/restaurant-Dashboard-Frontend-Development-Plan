@@ -11,6 +11,8 @@ import {
   Download
 } from 'lucide-react';
 import { MetricCard } from '@/components/analytics/metric-card';
+import { AppShell } from '@/components/layout';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
   title: 'Analytics Overview - Restaurant Dashboard',
@@ -143,15 +145,24 @@ const quickActions = [
 
 export default function AnalyticsPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Analytics Overview</h1>
-          <p className="mt-2 text-gray-600">
-            Comprehensive business intelligence for your restaurant operations
-          </p>
-        </div>
+    <AppShell 
+      title="Analytics Overview"
+      description="Comprehensive business intelligence for your restaurant operations"
+      breadcrumbs={[{ label: 'Analytics' }]}
+      actions={
+        <>
+          <Button variant="secondary">
+            <Download className="h-4 w-4 mr-2" />
+            Export Reports
+          </Button>
+          <Button variant="primary">
+            <Calendar className="h-4 w-4 mr-2" />
+            Schedule Report
+          </Button>
+        </>
+      }
+    >
+      <div className="max-w-7xl mx-auto space-y-8">
 
         {/* Key Metrics Grid */}
         <div className="mb-12">
@@ -316,6 +327,6 @@ export default function AnalyticsPage() {
           </div>
         </div>
       </div>
-    </div>
+    </AppShell>
   );
 }

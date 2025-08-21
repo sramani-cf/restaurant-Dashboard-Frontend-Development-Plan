@@ -1,18 +1,12 @@
 {
   "app": {
-    "[project]/app/_not-found/page": [
+    "[project]/app/analytics/page": [
       "static/media/caa3a2e1cccd8315.p.6435ea53.woff2"
     ],
-    "[project]/app/auth/login/page": [
+    "[project]/app/dashboard/page": [
       "static/media/caa3a2e1cccd8315.p.6435ea53.woff2"
     ],
     "[project]/app/inventory/page": [
-      "static/media/caa3a2e1cccd8315.p.6435ea53.woff2"
-    ],
-    "[project]/app/menu/page": [
-      "static/media/caa3a2e1cccd8315.p.6435ea53.woff2"
-    ],
-    "[project]/app/orders/[id]/page": [
       "static/media/caa3a2e1cccd8315.p.6435ea53.woff2"
     ],
     "[project]/app/orders/page": [

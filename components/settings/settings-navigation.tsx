@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { cn } from '../../lib/utils';
+import { cn } from '../ui/utils';
 
 interface NavigationItem {
   id: string;

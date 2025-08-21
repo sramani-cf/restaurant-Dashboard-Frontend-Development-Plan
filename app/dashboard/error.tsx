@@ -70,15 +70,19 @@ export default function DashboardError({ error, reset }: DashboardErrorProps) {
                 
                 <Button variant="outline" asChild className="w-full">
                   <a href="/dashboard">
-                    <BarChart3 className="h-4 w-4 mr-2" />
-                    Reload Dashboard
+                    <span className="flex items-center">
+                      <BarChart3 className="h-4 w-4 mr-2" />
+                      Reload Dashboard
+                    </span>
                   </a>
                 </Button>
                 
                 <Button variant="ghost" asChild className="w-full">
                   <a href="/">
-                    <Home className="h-4 w-4 mr-2" />
-                    Go Home
+                    <span className="flex items-center">
+                      <Home className="h-4 w-4 mr-2" />
+                      Go Home
+                    </span>
                   </a>
                 </Button>
               </div>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Menu, MenuButton, MenuItems, MenuItem, Transition } from '@headlessui/react';
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';
 import { cn } from './utils';
 import { ChevronDown, Check } from 'lucide-react';
 import { Button } from './button';
@@ -77,21 +77,14 @@ function Dropdown({
         {renderTrigger()}
       </MenuButton>
 
-      <Transition
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
+      <MenuItems
+        className={cn(
+          'absolute z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
+          'transition ease-out duration-100 transform data-[closed]:opacity-0 data-[closed]:scale-95',
+          getAlignmentClasses(),
+          menuClassName
+        )}
       >
-        <MenuItems
-          className={cn(
-            'absolute z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
-            getAlignmentClasses(),
-            menuClassName
-          )}
-        >
           {items.map((item) => {
             if (item.divider) {
               return (
@@ -149,7 +142,6 @@ function Dropdown({
             );
           })}
         </MenuItems>
-      </Transition>
     </Menu>
   );
 }

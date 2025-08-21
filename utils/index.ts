@@ -338,3 +338,9 @@ export const storage = {
     localStorage.clear();
   },
 };
+
+// Environment variable utilities
+export function getLoginBypassEnabled(): boolean {
+  return process.env.NEXT_PUBLIC_LOGIN_BUTTON_BYPASS_AUTH === 'on' ||
+         process.env.LOGIN_BUTTON_BYPASS_AUTH === 'on';
+}

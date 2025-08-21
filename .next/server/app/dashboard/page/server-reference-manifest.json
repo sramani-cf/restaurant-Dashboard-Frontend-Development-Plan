@@ -1,24 +1,9 @@
 {
   "node": {
-    "001f424fe93abbb175c0049ed79fc23cbabfe33c4d": {
+    "007e20e9e2c604b3cc8ff6a2bf5fe6e38dd0b74f61": {
       "workers": {
         "app/dashboard/page": {
-          "moduleId": "24248",
-          "async": false,
-          "exportedName": "revalidateDashboardData",
-          "filename": "lib/dashboard/data.ts"
-        }
-      },
-      "layer": {
-        "app/dashboard/page": "rsc"
-      },
-      "exportedName": "revalidateDashboardData",
-      "filename": "lib/dashboard/data.ts"
-    },
-    "00f7231f9c37fb4c63ead199dd1ab052387ae6f856": {
-      "workers": {
-        "app/dashboard/page": {
-          "moduleId": "24248",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/dashboard/data.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "revalidateLiveData",
           "filename": "lib/dashboard/data.ts"
@@ -30,10 +15,25 @@
       "exportedName": "revalidateLiveData",
       "filename": "lib/dashboard/data.ts"
     },
-    "40d8417e0b1fc0fb1626c8e8fb8f687638b2e261ac": {
+    "00faa0a877fa5d2eb12d98d46bb206d9245d768f44": {
       "workers": {
         "app/dashboard/page": {
-          "moduleId": "24248",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/dashboard/data.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "revalidateDashboardData",
+          "filename": "lib/dashboard/data.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/page": "rsc"
+      },
+      "exportedName": "revalidateDashboardData",
+      "filename": "lib/dashboard/data.ts"
+    },
+    "40085e4c3c87fd6facd65a3ca45b1741637948149b": {
+      "workers": {
+        "app/dashboard/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/dashboard/data.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "getDashboardData",
           "filename": "lib/dashboard/data.ts"
@@ -45,25 +45,10 @@
       "exportedName": "getDashboardData",
       "filename": "lib/dashboard/data.ts"
     },
-    "7f1e682b963e36fb81ab0b0ef742d70ba185864eb7": {
+    "7f2b2561c3b7f462952cf8c602c841e8ae638bbfe5": {
       "workers": {
         "app/dashboard/page": {
-          "moduleId": "24248",
-          "async": false,
-          "exportedName": "getSalesTrendData",
-          "filename": "lib/dashboard/data.ts"
-        }
-      },
-      "layer": {
-        "app/dashboard/page": "rsc"
-      },
-      "exportedName": "getSalesTrendData",
-      "filename": "lib/dashboard/data.ts"
-    },
-    "7f1fcf78b6623ee6d21300381f74e00c65c59b76dd": {
-      "workers": {
-        "app/dashboard/page": {
-          "moduleId": "24248",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/dashboard/data.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "getStaffPerformance",
           "filename": "lib/dashboard/data.ts"
@@ -75,40 +60,40 @@
       "exportedName": "getStaffPerformance",
       "filename": "lib/dashboard/data.ts"
     },
-    "7f5f1677920fbbfe8d891f91fb5253e570bf3da78d": {
+    "7f409b777ca255e699a69f769278fc57c92ba8b8ba": {
       "workers": {
         "app/dashboard/page": {
-          "moduleId": "24248",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/dashboard/data.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
-          "exportedName": "getLiveReservations",
+          "exportedName": "getSalesTrendData",
           "filename": "lib/dashboard/data.ts"
         }
       },
       "layer": {
         "app/dashboard/page": "rsc"
       },
-      "exportedName": "getLiveReservations",
+      "exportedName": "getSalesTrendData",
       "filename": "lib/dashboard/data.ts"
     },
-    "7f9172007dfe0846695705c9e3f62deabe91e15f68": {
+    "7f5f84a34186a2880ea5767e591efe24f43ebc1766": {
       "workers": {
         "app/dashboard/page": {
-          "moduleId": "24248",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/dashboard/data.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
-          "exportedName": "getDashboardKPIs",
+          "exportedName": "getTopProducts",
           "filename": "lib/dashboard/data.ts"
         }
       },
       "layer": {
         "app/dashboard/page": "rsc"
       },
-      "exportedName": "getDashboardKPIs",
+      "exportedName": "getTopProducts",
       "filename": "lib/dashboard/data.ts"
     },
-    "7fab0a375d8c208de8b34f1d3593ddcf4457fbc654": {
+    "7f61ee1750f3c3465eb587adcba0aede9c08dbe8ab": {
       "workers": {
         "app/dashboard/page": {
-          "moduleId": "24248",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/dashboard/data.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "getLiveOrders",
           "filename": "lib/dashboard/data.ts"
@@ -120,19 +105,34 @@
       "exportedName": "getLiveOrders",
       "filename": "lib/dashboard/data.ts"
     },
-    "7fc7320ae4c03844ed11fcf374de7869382830e9e8": {
+    "7f766cd878f431fd5519ca1951dd957dc89adcd323": {
       "workers": {
         "app/dashboard/page": {
-          "moduleId": "24248",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/dashboard/data.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
-          "exportedName": "getTopProducts",
+          "exportedName": "getDashboardKPIs",
           "filename": "lib/dashboard/data.ts"
         }
       },
       "layer": {
         "app/dashboard/page": "rsc"
       },
-      "exportedName": "getTopProducts",
+      "exportedName": "getDashboardKPIs",
+      "filename": "lib/dashboard/data.ts"
+    },
+    "7fbef3532cc015bc49cae22d3b5f5d53ab93dee2c7": {
+      "workers": {
+        "app/dashboard/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/dashboard/data.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getLiveReservations",
+          "filename": "lib/dashboard/data.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/page": "rsc"
+      },
+      "exportedName": "getLiveReservations",
       "filename": "lib/dashboard/data.ts"
     }
   },

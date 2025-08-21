@@ -99,6 +99,10 @@ Button.displayName = 'Button';
 __turbopack_context__.s([
     "Alert",
     ()=>Alert,
+    "AlertDescription",
+    ()=>AlertDescription,
+    "AlertTitle",
+    ()=>AlertTitle,
     "ErrorAlert",
     ()=>ErrorAlert,
     "InfoAlert",
@@ -257,13 +261,33 @@ const Alert = /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node
     }, ("TURBOPACK compile-time value", void 0));
 });
 Alert.displayName = 'Alert';
+const AlertTitle = /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["forwardRef"](({ className, ...props }, ref)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h5", {
+        ref: ref,
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("mb-1 font-medium leading-none tracking-tight", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert.tsx",
+        lineNumber: 112,
+        columnNumber: 3
+    }, ("TURBOPACK compile-time value", void 0)));
+AlertTitle.displayName = "AlertTitle";
+const AlertDescription = /*#__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["forwardRef"](({ className, ...props }, ref)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        ref: ref,
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("text-sm [&_p]:leading-relaxed", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert.tsx",
+        lineNumber: 124,
+        columnNumber: 3
+    }, ("TURBOPACK compile-time value", void 0)));
+AlertDescription.displayName = "AlertDescription";
 function SuccessAlert(props) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Alert, {
         variant: "success",
         ...props
     }, void 0, false, {
         fileName: "[project]/components/ui/alert.tsx",
-        lineNumber: 110,
+        lineNumber: 134,
         columnNumber: 10
     }, this);
 }
@@ -273,7 +297,7 @@ function WarningAlert(props) {
         ...props
     }, void 0, false, {
         fileName: "[project]/components/ui/alert.tsx",
-        lineNumber: 114,
+        lineNumber: 138,
         columnNumber: 10
     }, this);
 }
@@ -283,7 +307,7 @@ function ErrorAlert(props) {
         ...props
     }, void 0, false, {
         fileName: "[project]/components/ui/alert.tsx",
-        lineNumber: 118,
+        lineNumber: 142,
         columnNumber: 10
     }, this);
 }
@@ -293,7 +317,7 @@ function InfoAlert(props) {
         ...props
     }, void 0, false, {
         fileName: "[project]/components/ui/alert.tsx",
-        lineNumber: 122,
+        lineNumber: 146,
         columnNumber: 10
     }, this);
 }

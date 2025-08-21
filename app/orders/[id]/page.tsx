@@ -1,9 +1,11 @@
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { getOrder } from '@/lib/orders/data';
 import { OrderDetailContent } from './order-detail-content';
 import { OrderDetailSkeleton } from './order-detail-skeleton';
-import { PageHeader } from '@/components/ui/page-header';
+import { AppShell } from '@/components/layout';
+import { Button } from '@/components/ui/button';
 
 export default async function OrderDetailPage({
   params
@@ -17,28 +19,25 @@ export default async function OrderDetailPage({
   }
 
   return (
-    <div className="container mx-auto px-4 py-6 max-w-7xl">
-      <PageHeader
-        title={`Order ${order.orderNumber}`}
-        description={`${order.type.replace('_', ' ')} • ${order.customerName || 'Guest'}`}
-        backHref="/orders"
-        actions={[
-          {
-            label: 'Print',
-            onClick: () => {},
-            variant: 'outline'
-          },
-          {
-            label: 'Edit',
-            href: `/orders/${params.id}/edit`,
-            variant: 'secondary'
-          }
-        ]}
-      />
-
+    <AppShell
+      title={`Order ${order.orderNumber}`}
+      description={`${order.type.replace('_', ' ')} • ${order.customerName || 'Guest'}`}
+      breadcrumbs={[
+        { label: 'Orders', href: '/orders' },
+        { label: `Order ${order.orderNumber}` }
+      ]}
+      actions={
+        <>
+          <Button variant="secondary">Print</Button>
+          <Link href={`/orders/${params.id}/edit`}>
+            <Button variant="secondary">Edit</Button>
+          </Link>
+        </>
+      }
+    >
       <Suspense fallback={<OrderDetailSkeleton />}>
         <OrderDetailContent order={order} />
       </Suspense>
-    </div>
+    </AppShell>
   );
 }
